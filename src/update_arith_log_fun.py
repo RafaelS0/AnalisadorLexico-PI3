@@ -25,6 +25,7 @@ tokens = [
     # para números
     'OP_COMP',
     'OP_ARITH',
+    'DELIM',
 	
     # outros
     'NUMBER',
@@ -34,8 +35,6 @@ tokens = [
 ] + list(reserved.values())#adiciona aos tokens
 
 t_OP_ARITH = r'[\+\-\*/]'
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
 
 def t_NUMBER(t):
     r'\d+'
@@ -54,7 +53,12 @@ def t_SYMBOL(t):
         t.type = reserved.get(t.value, 'SYMBOL')
     return t
 
-def t_LOG(t):
+def t_LIMITER(t) :
+	r'[\(\)\[\]\{\}]'
+	t.type = "DELIM"
+	return t
+
+def t_COMPARATORY(t):
 	r'[<>][=]?'
 	t.type = "OP_COMP"
 	return t
@@ -78,12 +82,6 @@ lexer = lex.lex()
 # Test it out
 cmp_data = '''
 (list 1 2 3 4)
-
-(+ 4 2)
-(floor 4 2)
-
-(> 2 1)
-(>= 2 2)
 '''
 
 # prints (Lisp)
