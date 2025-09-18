@@ -26,17 +26,17 @@ tokens = [
     'OP_COMP',
     'OP_ARITH',
     'DELIM',
-	'COMENT',
+    'COMENT',
 	
     # outros
     'NUMBER',
     'LPAREN',
     'RPAREN',
-    'SYMBOL' # <- ID
+    'IDENT' # <- ID
 ] + list(reserved.values())#adiciona aos tokens
 
 t_OP_ARITH = r'[\+\-\*/]'
-t_COMENT = r'\#'
+#t_COMENT = r'\#'
 
 def t_NUMBER(t):
     r'\d+'
@@ -47,8 +47,8 @@ def t_NUMBER(t):
 # digito -> [0-9]
 # id     -> letra_ (letra_ | digito)*
 
-def t_SYMBOL(t):
-    r'[a-zA-Z_][a-zA-Z_0-9-]*(=)?'#Lisp permite hifen
+def t_IDENT(t):
+    r'[a-zA-Z_][a-zA-Z_0-9-]*(-)?'#Lisp permite hifen
     if t.value in ("floor", "mod", "expt"):
         t.type = "OP_ARITH"
     else:
@@ -63,6 +63,11 @@ def t_LIMITER(t) :
 def t_COMPARATORY(t):
 	r'[<>][=]? | [/][=]'
 	t.type = "OP_COMP"
+	return t
+	
+def t_COMENT(t):
+	r'[\#] ([ \t]+ | [\#a-zA-Z_0-9-\+\-\*/\(\)\[\]\{\}<>=])+'
+	t.tipe = "COMENT"
 	return t
 
 # A string containing ignored characters (spaces and tabs)
@@ -83,7 +88,8 @@ lexer = lex.lex()
 
 # Test it out
 cmp_data = '''
-(list 1 2 3 4)
+(/ 4 2)  #o 1 / = + ) [
+(/= 4 4)
 '''
 
 # prints (Lisp)
