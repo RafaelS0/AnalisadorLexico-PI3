@@ -23,7 +23,7 @@ reserved = {
 
 tokens = [
     # para números
-    'OP_LOG',
+    'OP_COMP',
     'OP_ARITH',
 	
     # outros
@@ -56,7 +56,7 @@ def t_SYMBOL(t):
 
 def t_LOG(t):
 	r'[<>][=]?'
-	t.type = "OP_LOG"
+	t.type = "OP_COMP"
 	return t
 
 # A string containing ignored characters (spaces and tabs)
