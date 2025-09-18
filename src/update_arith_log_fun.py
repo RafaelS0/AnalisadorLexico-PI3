@@ -2,11 +2,6 @@ import ply.lex as lex
 
 # keywords : token
 reserved = {
-    'eq'           	: 'EQ',			# igualdade estrita - (para simbolos)
-    'eql'          	: 'EQL',		# igualdade de valor e tipo - (para numeros e simbolos)
-    'equal'        	: 'EQUAL',		# igualdade de conteudo - (listas, vetores, strings)
-    'equalp'       	: 'EQUALP',		# igualdade Permissiva - (ignora maiusculas/minusculas e tipos numericos)
-    
     # para string
     'string='      	: 'STRING_EQ',
     'string-equal' 	: 'STRING_EQUAL',
@@ -51,8 +46,10 @@ def t_IDENT(t):
     r'[a-zA-Z_][a-zA-Z_0-9-]*(-)?'#Lisp permite hifen
     if t.value in ("floor", "mod", "expt"):
         t.type = "OP_ARITH"
+    elif t.value in ("eq", "eql", "equal", "equalp"):
+        t.type = "OP_COMP"
     else:
-        t.type = reserved.get(t.value, 'SYMBOL')
+        t.type = reserved.get(t.value, 'IDENT')
     return t
 
 def t_LIMITER(t) :
@@ -89,7 +86,7 @@ lexer = lex.lex()
 # Test it out
 cmp_data = '''
 (/ 4 2)  #o 1 / = + ) [
-(/= 4 4)
+(eq 4 4)
 '''
 
 # prints (Lisp)
