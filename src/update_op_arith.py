@@ -7,11 +7,6 @@ reserved = {
     'equal'        	: 'EQUAL',		# igualdade de conteudo - (listas, vetores, strings)
     'equalp'       	: 'EQUALP',		# igualdade Permissiva - (ignora maiusculas/minusculas e tipos numericos)
     
-    # operacoes aritmeticas
-    'root'			: 'ROOT', 		# divisao inteira
-    'mod'			: 'MOD',		# modulo
-    'expt'			: 'EXPT', 		# exponenciacao
-    
     # para string
     'string='      	: 'STRING_EQ',
     'string-equal' 	: 'STRING_EQUAL'
@@ -25,10 +20,7 @@ tokens = [
     'OP_GREATER_THAN_OR_EQUAL_TO', 	# geq (≥)
     'OP_LESS_THAN',                	# lt (<)
     'OP_LESS_THAN_OR_EQUAL_TO',    	# leq (≤)
-    'OP_PLUS',				       	# plus (+)
-    'OP_MINUS',						# minus (-)
-    'OP_TIMES',						# times (*)
-    'OP_DIVIDE',					# divide (/)
+    'OP_ARITH',
 
     # outros
     'NUMBER',
@@ -43,13 +35,7 @@ t_OP_GREATER_THAN = r'>'
 t_OP_GREATER_THAN_OR_EQUAL_TO = r'>='
 t_OP_LESS_THAN = r'<'
 t_OP_LESS_THAN_OR_EQUAL_TO = r'<='
-t_ROOT = r'root'
-t_MOD = r'mod'
-t_EXPT = r'expt'
-t_OP_PLUS = r'\+'
-t_OP_MINUS = r'-'
-t_OP_TIMES = r'\*'
-t_OP_DIVIDE = r'/'
+t_OP_ARITH = r'[\+\-\*/]'
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
 
@@ -63,8 +49,11 @@ def t_NUMBER(t):
 # id     -> letra_ (letra_ | digito)*
 
 def t_SYMBOL(t):
-    r'[a-zA-Z_][a-zA-Z_0-9-]*(=)?'#Lisp permite hifen
-    t.type = reserved.get(t.value, 'SYMBOL')#valor encontrado é palavra reservada?
+    r'[a-zA-Z_][a-zA-Z_0-9-]*(=)?'
+    if t.value in ("root", "mod", "expt"):
+        t.type = "OP_ARITH"
+    else:
+        t.type = reserved.get(t.value, 'SYMBOL')
     return t
 
 # A string containing ignored characters (spaces and tabs)
@@ -87,13 +76,13 @@ lexer = lex.lex()
 
 # Test it out
 cmp_data = '''
-(mod 10 5)
-(root 10 3)
-(expt 2 2)
 (/ 4 2)
 (* 4 2)
 (+ 4 2)
 (- 4 2)
+(root 4 2)
+(mod 4 2)
+(expt 4 2)
 '''
 
 # prints (Lisp)
