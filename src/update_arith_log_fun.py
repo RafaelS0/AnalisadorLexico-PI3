@@ -26,6 +26,7 @@ tokens = [
     'OP_COMP',
     'OP_ARITH',
     'DELIM',
+	'COMENT',
 	
     # outros
     'NUMBER',
@@ -35,6 +36,7 @@ tokens = [
 ] + list(reserved.values())#adiciona aos tokens
 
 t_OP_ARITH = r'[\+\-\*/]'
+t_COMENT = r'\#'
 
 def t_NUMBER(t):
     r'\d+'
