@@ -85,7 +85,7 @@ lexer = lex.lex()
 
 # Test it out
 cmp_data = '''
-(/ 4 2)  #o 1 / = + ) [
+(/ 4 2)  -- o 1 / = + ) [
 (eq 4 4)
 '''
 
