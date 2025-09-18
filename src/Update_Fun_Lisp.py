@@ -13,7 +13,9 @@ reserved = {
     'car'           : 'CAR',        # recebe uma lista e devolve o primeiro elemento
     'cdr'           : 'CDR',        # tira o primeiro elemento de uma lista
     'defun'         : 'DEFUN',      # constrói uma função
-    'cond'          : 'COND'        # teste condicional
+    'cond'          : 'COND',       # teste condicional
+    'if'            : 'IF'
+
 }
 
 tokens = [
@@ -88,8 +90,32 @@ lexer = lex.lex()
 
 # Test it out
 cmp_data = '''
-(and (> 10 5) (<= 3 3))
-(or (= 4 2) (not (/= 5 5)))
+(defun soma (lista)
+    (if (eq lista nil) 0
+        (+ (car lista) (soma (cdr lista)))))
+
+(defun concat (lista1 lista2)
+    (if (eq lista1 nil) lista2
+        (cons (car lista1)
+            (concat (cdr lista1) lista2))))
+
+(defun inverter (lista)
+    (if (eq lista nil) nil
+        (concat (inverter (cdr lista))
+            (cons (car lista) nil))))
+
+(defun ordenar (lista)
+    (if (eq lista nil) nil
+        (cons (menor (car lista) (cdr lista)) (retirar (menor (car lista) (cdr lista)) lista))))
+(defun menor (atual lista)
+    (if (eq lista nil) atual
+        (if (lt (car lista) atual
+            (menor (car lista) (cdr lista)) (menor atual (cdr lista))))
+(defun retirar (elem lista)
+    (cond
+        ((eq lista nil) nil)
+        ((eq elem (car lista)) (cdr lista))
+        (T (cons (car lista) (retirar elem (cdr lista)))))
 '''
 
 # prints (Lisp)
