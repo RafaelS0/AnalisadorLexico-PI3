@@ -9,20 +9,23 @@ reserved = {
     
     # para string
     'string='      	: 'STRING_EQ',
-    'string-equal' 	: 'STRING_EQUAL'
+    'string-equal' 	: 'STRING_EQUAL',
+
+    # comandos e funções lisp
+    'list'          : 'LIST',       # cria uma lista com os argumentos passados
+    'cons'          : 'CONS',       # coloca o primeiro argumento no início da lista
+    'nil'           : 'NIL',        # lista vazia
+    'car'           : 'CAR',        # recebe uma lista e devolve o primeiro elemento
+    'cdr'           : 'CDR',        # tira o primeiro elemento de uma lista
+    'defun'         : 'DEFUN',      # constrói uma função
+    'cond'          : 'COND'        # teste condicional
 }
 
 tokens = [
     # para números
-    #'OP_EQUAL',                    	# eq (=)
-    #'OP_NOT_EQUAL',                	# neq (≠)
-    #'OP_GREATER_THAN',             	# gt (>)
-    #'OP_GREATER_THAN_OR_EQUAL_TO', 	# geq (≥)
-    #'OP_LESS_THAN',                	# lt (<)
-    #'OP_LESS_THAN_OR_EQUAL_TO',    	# leq (≤)
     'OP_LOG',
     'OP_ARITH',
-
+	
     # outros
     'NUMBER',
     'LPAREN',
@@ -44,8 +47,8 @@ def t_NUMBER(t):
 # id     -> letra_ (letra_ | digito)*
 
 def t_SYMBOL(t):
-    r'[a-zA-Z_][a-zA-Z_0-9-]*(=)?'
-    if t.value in ("root", "mod", "expt"):
+    r'[a-zA-Z_][a-zA-Z_0-9-]*(=)?'#Lisp permite hifen
+    if t.value in ("floor", "mod", "expt"):
         t.type = "OP_ARITH"
     else:
         t.type = reserved.get(t.value, 'SYMBOL')
@@ -55,7 +58,7 @@ def t_LOG(t):
 	r'[<>][=]?'
 	t.type = "OP_LOG"
 	return t
-	
+
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
@@ -69,17 +72,18 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-
-
 # Build the lexer
 lexer = lex.lex()
 
 # Test it out
 cmp_data = '''
-(>= 4 2)
-(<= 4 2)
-(> 4 2)
-(< 4 2)
+(list 1 2 3 4)
+
+(+ 4 2)
+(floor 4 2)
+
+(> 2 1)
+(>= 2 2)
 '''
 
 # prints (Lisp)
