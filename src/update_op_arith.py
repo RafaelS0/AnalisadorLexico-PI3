@@ -14,12 +14,13 @@ reserved = {
 
 tokens = [
     # para números
-    'OP_EQUAL',                    	# eq (=)
-    'OP_NOT_EQUAL',                	# neq (≠)
-    'OP_GREATER_THAN',             	# gt (>)
-    'OP_GREATER_THAN_OR_EQUAL_TO', 	# geq (≥)
-    'OP_LESS_THAN',                	# lt (<)
-    'OP_LESS_THAN_OR_EQUAL_TO',    	# leq (≤)
+    #'OP_EQUAL',                    	# eq (=)
+    #'OP_NOT_EQUAL',                	# neq (≠)
+    #'OP_GREATER_THAN',             	# gt (>)
+    #'OP_GREATER_THAN_OR_EQUAL_TO', 	# geq (≥)
+    #'OP_LESS_THAN',                	# lt (<)
+    #'OP_LESS_THAN_OR_EQUAL_TO',    	# leq (≤)
+    'OP_LOG',
     'OP_ARITH',
 
     # outros
@@ -29,12 +30,6 @@ tokens = [
     'SYMBOL' # <- ID
 ] + list(reserved.values())#adiciona aos tokens
 
-t_OP_EQUAL = r'='
-t_OP_NOT_EQUAL = r'/='
-t_OP_GREATER_THAN = r'>'
-t_OP_GREATER_THAN_OR_EQUAL_TO = r'>='
-t_OP_LESS_THAN = r'<'
-t_OP_LESS_THAN_OR_EQUAL_TO = r'<='
 t_OP_ARITH = r'[\+\-\*/]'
 t_LPAREN  = r'\('
 t_RPAREN  = r'\)'
@@ -56,6 +51,11 @@ def t_SYMBOL(t):
         t.type = reserved.get(t.value, 'SYMBOL')
     return t
 
+def t_LOG(t):
+	r'[<>][=]?'
+	t.type = "OP_LOG"
+	return t
+	
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
@@ -76,13 +76,10 @@ lexer = lex.lex()
 
 # Test it out
 cmp_data = '''
-(/ 4 2)
-(* 4 2)
-(+ 4 2)
-(- 4 2)
-(root 4 2)
-(mod 4 2)
-(expt 4 2)
+(>= 4 2)
+(<= 4 2)
+(> 4 2)
+(< 4 2)
 '''
 
 # prints (Lisp)
