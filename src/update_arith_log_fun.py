@@ -63,7 +63,7 @@ def t_COMPARATORY(t):
 	return t
 	
 def t_COMENT(t):
-	r'[\#] ([ \t]+ | [\#a-zA-Z_0-9-\+\-\*/\(\)\[\]\{\}<>=])+'
+	r'[-][-] ([ \t] | [\#a-zA-Z_0-9-\+\-\*/\(\)\[\]\{\}<>=])+'
 	t.tipe = "COMENT"
 	return t
 
