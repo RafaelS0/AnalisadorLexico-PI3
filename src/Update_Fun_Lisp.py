@@ -2,16 +2,6 @@ import ply.lex as lex
 
 # keywords : token
 reserved = {
-    'eq'           	: 'EQ',			# igualdade estrita - (para simbolos)
-    'eql'          	: 'EQL',		# igualdade de valor e tipo - (para numeros e simbolos)
-    'equal'        	: 'EQUAL',		# igualdade de conteudo - (listas, vetores, strings)
-    'equalp'       	: 'EQUALP',		# igualdade Permissiva - (ignora maiusculas/minusculas e tipos numericos)
-    
-    # operacoes aritmeticas
-    'root'			: 'ROOT', 		# divisao inteira
-    'mod'			: 'MOD',		# modulo
-    'expt'			: 'EXPT', 		# exponenciacao
-    
     # para string
     'string='      	: 'STRING_EQ',
     'string-equal' 	: 'STRING_EQUAL',
@@ -28,39 +18,21 @@ reserved = {
 
 tokens = [
     # para números
-    'OP_EQUAL',                    	# eq (=)
-    'OP_NOT_EQUAL',                	# neq (≠)
-    'OP_GREATER_THAN',             	# gt (>)
-    'OP_GREATER_THAN_OR_EQUAL_TO', 	# geq (≥)
-    'OP_LESS_THAN',                	# lt (<)
-    'OP_LESS_THAN_OR_EQUAL_TO',    	# leq (≤)
-    'OP_PLUS',				       	# plus (+)
-    'OP_MINUS',						# minus (-)
-    'OP_TIMES',						# times (*)
-    'OP_DIVIDE',					# divide (/)
-
+    'OP_COMP',
+    'OP_ARITH',
+    'OP_LOGIC',
+    'DELIM',
+    'COMENT',
+	
     # outros
     'NUMBER',
     'LPAREN',
     'RPAREN',
-    'SYMBOL' # <- ID
+    'IDENT' # <- ID
 ] + list(reserved.values())#adiciona aos tokens
 
-t_OP_EQUAL = r'='
-t_OP_NOT_EQUAL = r'/='
-t_OP_GREATER_THAN = r'>'
-t_OP_GREATER_THAN_OR_EQUAL_TO = r'>='
-t_OP_LESS_THAN = r'<'
-t_OP_LESS_THAN_OR_EQUAL_TO = r'<='
-t_ROOT = r'root'
-t_MOD = r'mod'
-t_EXPT = r'expt'
-t_OP_PLUS = r'\+'
-t_OP_MINUS = r'-'
-t_OP_TIMES = r'\*'
-t_OP_DIVIDE = r'/'
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
+t_OP_ARITH = r'[\+\-\*/]'
+#t_COMENT = r'\#'
 
 def t_NUMBER(t):
     r'\d+'
@@ -71,10 +43,32 @@ def t_NUMBER(t):
 # digito -> [0-9]
 # id     -> letra_ (letra_ | digito)*
 
-def t_SYMBOL(t):
-    r'[a-zA-Z_][a-zA-Z_0-9-]*(=)?'#Lisp permite hifen
-    t.type = reserved.get(t.value, 'SYMBOL')#valor encontrado é palavra reservada?
+def t_IDENT(t):
+    r'[a-zA-Z_][a-zA-Z_0-9-]*(-)?'#Lisp permite hifen
+    if t.value in ("floor", "mod", "expt"):
+        t.type = "OP_ARITH"
+    elif t.value in ("eq", "eql", "equal", "equalp"):
+        t.type = "OP_COMP"
+    elif t.value in ("and", "or", "not"):
+        t.type = "OP_LOGIC"
+    else:
+        t.type = reserved.get(t.value, 'IDENT')
     return t
+
+def t_LIMITER(t) :
+	r'[\(\)\[\]\{\}]'
+	t.type = "DELIM"
+	return t
+
+def t_COMPARATORY(t):
+	r'<=|>=|!=|<|>|='
+	t.type = "OP_COMP"
+	return t
+	
+def t_COMENT(t):
+	r'[\#] ([ \t]+ | [\#a-zA-Z_0-9-\+\-\*/\(\)\[\]\{\}<>=])+'
+	t.type = "COMENT"
+	return t
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
@@ -89,18 +83,13 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
-
-
 # Build the lexer
 lexer = lex.lex()
 
 # Test it out
 cmp_data = '''
-(list 1 2 3 4)
-(cons 5 nil)
-(defun soma (a b) (+ a b))
-(car '(7 1 2 3))
-(cdr '(7 1 2 3))
+(and (> 10 5) (<= 3 3))
+(or (= 4 2) (not (/= 5 5)))
 '''
 
 # prints (Lisp)
