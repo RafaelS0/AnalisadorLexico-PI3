@@ -59,7 +59,7 @@ def t_LIMITER(t) :
 	return t
 
 def t_COMPARATORY(t):
-	r'[<>][=]?'
+	r'[<>][=]? | [/][=]'
 	t.type = "OP_COMP"
 	return t
 
