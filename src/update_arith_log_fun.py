@@ -22,7 +22,7 @@ tokens = [
     'OP_ARITH',
     'DELIM',
     'COMENT',
-	
+
     # outros
     'NUMBER',
     'LPAREN',
@@ -85,8 +85,9 @@ lexer = lex.lex()
 
 # Test it out
 cmp_data = '''
-(/ 4 2)  -- o 1 / = + ) [
-(eq 4 4)
+(defun soma (lista)
+ (if (eq lista nil) 0
+  (+ (car lista) (soma (cdr lista)))))
 '''
 
 # prints (Lisp)
