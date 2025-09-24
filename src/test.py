@@ -1,12 +1,18 @@
 from ply.lex import lex
 from ply.yacc import yacc
 
+reserved = {
+ 'floor'  : 'DIV',
+ 'mod'    : 'MOD',
+ 'expt'   : 'EXPT',
+ 'nil'    : 'NIL'
+}
+
 # --- Tokenizer
-tokens = (
-    'PLUS','MINUS','TIMES','DIVIDE','DIV','MOD','EXPT',
-    'LPAREN','RPAREN',
-    'NAME','NUMBER'
-)
+tokens = [
+    'PLUS','MINUS','TIMES','DIVIDE',
+    'LPAREN','RPAREN','NUMBER'
+] + list(reserved.values())
 
 t_ignore = ' \t'
 
@@ -14,12 +20,14 @@ t_PLUS   = r'\+'
 t_MINUS  = r'-'
 t_TIMES  = r'\*'
 t_DIVIDE = r'/'
-t_DIV    = r'floor'
-t_MOD    = r'mod'
-t_EXPT   = r'expt'
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
-t_NAME   = r'[a-zA-Z_][a-zA-Z0-9_-]*'
+#t_NAME   = r'[a-zA-Z_][a-zA-Z0-9_-]*'
+
+def t_SYMBOL(t):
+    r'[a-zA-Z_][a-zA-Z0-9_-]*'#Lisp permite hifen
+    t.type = reserved.get(t.value, 'ID')#valor encontrado é palavra reservada?
+    return t
 
 def t_NUMBER(t):
     r'\d+'
@@ -43,38 +51,48 @@ def p_expression_list_multiple(p):
     '''
     expression_list : expression expression_list
     '''
-    p[0] = [p[1]] + p[2]
+    p[0] = (p[1],p[2])
 
 def p_expression_list_single(p):
     '''
     expression_list : expression
     '''
-    p[0] = [p[1]]
+    p[0] = p[1]
 
-# chamadas: (op arg1 arg2 ...)
 def p_expression_call(p):
     '''
     expression : LPAREN operator expression_list RPAREN
     '''
-    args = " ".join(p[3])
-    p[0] = f"({p[2]} {args})"
+    p[0] = (p[2],p[3])
+
+def p_expression_one(p):
+    '''
+    expression : LPAREN expression RPAREN
+    '''
+    p[0] = p[2]
+
+def p_expression_empty(p):
+    '''
+    expression : LPAREN RPAREN
+    '''
+    p[0] = ('nil')
 
 # números
 def p_expression_number(p):
     '''
     expression : NUMBER
     '''
-    p[0] = str(p[1])
-
+    p[0] = p[1]
+    
 # identificadores
 def p_expression_name(p):
     '''
-    expression : NAME
+    expression : ID
     '''
     p[0] = p[1]
 
 # operador pode ser um dos tokens ou um nome qualquer
-def p_operator(p):
+def p_operator_reserved(p):
     '''
     operator : PLUS
              | MINUS
@@ -83,24 +101,10 @@ def p_operator(p):
              | DIV
              | MOD
              | EXPT
-             | NAME
+             | NIL
+             | ID
     '''
-    if p.slice[1].type == "PLUS":
-        p[0] = ('plus', p[1])
-    elif p.slice[1].type == "MINUS":
-        p[0] = ('minus', p[1])
-    elif p.slice[1].type == "TIMES":
-        p[0] = ('times', p[1])
-    elif p.slice[1].type == "DIVIDE":
-        p[0] = ('divide', p[1])
-    elif p.slice[1].type == "DIV":
-        p[0] = ('div', p[1])
-    elif p.slice[1].type == "MOD":
-        p[0] = ('mod', p[1])
-    elif p.slice[1].type == "EXPT":
-        p[0] = ('expt', p[1])
-    else:
-        p[0] = ('identificador', p[1])
+    p[0] = p[1]
 
 def p_error(p):
     print(f'Syntax error at {p.value!r}')
@@ -108,7 +112,9 @@ def p_error(p):
 parser = yacc()
 
 # --- Testes
-print(parser.parse('(+ 1 2)'))
-print(parser.parse('(+ 1 (mod 10 3))'))
-print(parser.parse('(expt 2 8)'))
-print(parser.parse('(+ 1 2 3 4 5)'))
+print(parser.parse('(defun (soma (list n)))'))
+print(parser.parse('(list 1 2 3 4)'))
+print(parser.parse('(1)'))
+print(parser.parse('(nil)'))
+print(parser.parse('(mod 2 1)'))
+print(parser.parse('()'))
