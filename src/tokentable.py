@@ -1,6 +1,14 @@
 from ply.lex import lex
 
 reserved = {
+ 'list'   : 'LIST',       # cria uma lista com os argumentos passados
+ 'cons'   : 'CONS',       # coloca o primeiro argumento no início da lista
+ 'nil'    : 'NIL',        # lista vazia
+ 'car'    : 'CAR',        # recebe uma lista e devolve o primeiro elemento
+ 'cdr'    : 'CDR',        # tira o primeiro elemento de uma lista
+ 'defun'  : 'DEFUN',      # constrói uma função
+ 'cond'   : 'COND',       # teste condicional
+ 'if'     : 'IF'
  'floor'  : 'DIV',
  'mod'    : 'MOD',
  'expt'   : 'EXPT',
