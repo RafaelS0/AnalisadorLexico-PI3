@@ -45,7 +45,7 @@ def p_expression_number(p):
     '''
     expression : NUMBER
     '''
-    p[0] = ('num',p[1])
+    p[0] = ('number',p[1])
     
 # identificadores
 def p_expression_name(p):
@@ -66,6 +66,13 @@ def p_operator_reserved(p):
              | EXPT
              | NIL
              | ID
+             | LIST
+             | CONS
+             | CAR
+             | CDR
+             | DEFUN
+             | COND
+             | IF
     '''
     if p.slice[1].type == "PLUS":
         p[0] = ('plus', p[1])
@@ -85,6 +92,20 @@ def p_operator_reserved(p):
         p[0] = ('nil', p[1])
     elif p.slice[1].type == "ID":
         p[0] = ('id', p[1])
+    elif p.slice[1].type == "LIST":
+        p[0] = ('list', p[1])
+    elif p.slice[1].type == "CONS":
+        p[0] = ('cons', p[1])
+    elif p.slice[1].type == "CAR":
+        p[0] = ('car', p[1])
+    elif p.slice[1].type == "CDR":
+        p[0] = ('cdr', p[1])
+    elif p.slice[1].type == "DEFUN":
+        p[0] = ('defun', p[1])
+    elif p.slice[1].type == "COND":
+        p[0] = ('cond', p[1])
+    elif p.slice[1].type == "IF":
+        p[0] = ('if', p[1])
 
 def p_error(p):
     print(f'Syntax error at {p.value!r}')
@@ -93,4 +114,5 @@ parser = yacc()
 
 # --- Testes
 
-print(parser.parse('(T (cons (car lista) (retirar elem (cdr lista))))'))
+print(parser.parse('(list 1 2 3 4)'))
+print(parser.parse('(+ 4 3)'))
