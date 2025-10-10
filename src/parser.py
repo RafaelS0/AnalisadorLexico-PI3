@@ -97,7 +97,7 @@ def p_especial_cond(p):
     '''
     p[0] = (p[1],p[2],p[3],p[4])
     
-def p_operation_compp(p):
+def p_operation_comp(p):
     '''
     operation : comparation
     '''
@@ -116,7 +116,6 @@ def p_comparation(p):
                 | LPAREN LT expression expression RPAREN
                 | LPAREN LTE expression expression RPAREN
     '''
-    # p[2] é o valor do token (ex.: 'eq', 'eql', '>')
     p[0] = (p[2], [p[3], p[4]])
 
 
