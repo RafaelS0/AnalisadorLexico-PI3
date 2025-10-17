@@ -11,3 +11,8 @@
         (if (< (car lista) atual)
             (menor (car lista) (cdr lista))
             (menor atual (cdr lista)))))
+(defun retirar (elem lista)
+    (cond
+        ((eq lista nil) nil)
+        ((equalp elem (car lista)) (cdr lista))
+        (T (cons (car lista) (retirar elem (cdr lista))))))
