@@ -1,154 +1,158 @@
-import ply.lex as lex
+from ply.yacc import yacc
+from tokens import tokens, lexer
 
-# palavras reservadas (keywords) em um único dicionário
-reserved = {
-    # funções de string
-    'string='       : 'STRING_EQ',
-    'string-equal'  : 'STRING_EQUAL',
+# --- Parser ---
 
-    # funções Lisp
-    'list'          : 'LIST',
-    'cons'          : 'CONS',
-    'nil'           : 'NIL',
-    'car'           : 'CAR',
-    'cdr'           : 'CDR',
-    'defun'         : 'DEFUN',
-    'cond'          : 'COND',
-    'if'            : 'IF',
+def p_program(p):
+    '''
+    program : function_list
+    '''
+    p[0] = p[1]
 
-    # funções aritméticas
-    'floor'         : 'FLOOR',
-    'mod'           : 'MOD',
-    'expt'          : 'EXPT',
+def p_function_list_multi(p):
+    '''
+    function_list : function function_list
+    '''
+    p[0] = [p[1]] + p[2]
 
-    # funções de comparação
-    'eq'            : 'EQ',
-    'eql'           : 'EQL',
-    'equal'         : 'EQUAL',
-    'equalp'        : 'EQUALP',
+def p_function_list_single(p):
+    '''
+    function_list : function
+    '''
+    p[0] = [p[1]]
 
-    # funções lógicas
-    'and'           : 'AND',
-    'or'            : 'OR',
-    'not'           : 'NOT'
-}
+def p_function(p):
+    '''
+    function : LPAREN DEFUN ID LPAREN parameters RPAREN expression RPAREN
+    '''
+    p[0] = (p[2], p[3], p[5], p[7])
 
-# lista de tokens
-tokens = [
-             # tipos de dados
-             'NUM',
-             'STRING',
-             'ID',  # só para identificadores que não são palavras-chave
+def p_param_multi(p):
+    '''
+    parameters : ID parameters
+    '''
+    p[0] = [p[1]] + p[2]
 
-             # operadores
-             'PLUS',      # +
-             'MINUS',     # -
-             'TIMES',     # *
-             'DIVIDE',    # /
-             'NUM_EQ',    # =
-             'NUM_NEQ',   # /=
-             'GT',        # >
-             'GTE',       # >=
-             'LT',        # <
-             'LTE',       # <=
+def p_param_single(p):
+    '''
+    parameters : ID
+    '''
+    p[0] = [p[1]]
 
-             # delimitadores
-             'LPAREN',
-             'RPAREN',
-             'LBRACKET',  # [
-             'RBRACKET',  # ]
-             'LBRACE',    # {
-             'RBRACE',    # }
-             'T'          # true
-         ] + list(reserved.values()) # adiciona as palavras-chave do dicionário
+def p_expression_term(p):
+    '''
+    expression : term
+    '''
+    p[0] = p[1]
 
-# regras de tokens simples para símbolos
-t_PLUS      = r'\+'
-t_MINUS     = r'-'
-t_TIMES     = r'\*'
-t_DIVIDE    = r'/'
-t_NUM_EQ    = r'='
-t_NUM_NEQ   = r'/='
-t_GT        = r'>'
-t_GTE       = r'>='
-t_LT        = r'<'
-t_LTE       = r'<='
-t_LPAREN    = r'\('
-t_RPAREN    = r'\)'
-t_LBRACKET  = r'\['
-t_RBRACKET  = r'\]'
-t_LBRACE    = r'\{'
-t_RBRACE    = r'\}'
+def p_term(p):
+    '''
+    term : NUM
+         | ID
+         | NIL
+         | T
+    '''
+    p[0] = p[1]
 
+def p_expression_op(p):
+    '''
+    expression : LPAREN operation RPAREN
+    '''
+    p[0] = p[2]
 
-# regras de tokens mais complexos
+# --- OPERAÇÕES ---
 
-def t_NUM(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
+def p_if(p):
+    '''
+    operation : IF expression expression expression
+    '''
+    p[0] = (p[1], p[2], p[3], p[4])
 
-def t_STRING(t):
-    r'\"[^\"]*\"'
-    t.value = t.value[1:-1]
-    return t
+def p_arith(p):
+    '''
+    operation : PLUS expression expression
+              | MINUS expression expression
+              | TIMES expression expression
+              | DIVIDE expression expression
+              | FLOOR expression expression
+              | MOD expression expression
+              | EXPT expression expression
+    '''
+    p[0] = (p[1], p[2], p[3])
 
-def t_SYMBOL(t):
-    r'[a-zA-Z_][a-zA-Z_0-9-]*'
-    if t.value == 'T':
-        t.type = 'T'
+# --- Argumentos ---
+
+def p_call(p):
+    '''
+    operation : ID arglist
+    '''
+    p[0] = (p[1], p[2])
+
+def p_arglist_empty(p):
+    '''arglist : '''
+    p[0] = []
+
+def p_arglist_list(p):
+    '''arglist : expression arglist'''
+    p[0] = [p[1]] + p[2]
+
+def p_especial_in2(p):
+    '''
+    operation : CAR expression
+              | CDR expression
+              | COND cond_clauses
+    '''
+    p[0] = (p[1], p[2])
+
+def p_especial_in3(p):
+    '''
+    operation : CONS expression expression
+    '''
+    p[0] = (p[1], p[2], p[3])
+
+# --- COND ---
+
+def p_cond_clause(p):
+    '''
+    cond_clause : LPAREN expression expression RPAREN
+    '''
+    p[0] = (p[2], p[3])
+
+def p_cond_clauses_empty(p):
+    '''
+    cond_clauses :
+    '''
+    p[0] = []
+
+def p_cond_clauses_nonempty(p):
+    '''
+    cond_clauses : cond_clause cond_clauses
+    '''
+    p[0] = [p[1]] + p[2]
+
+# --- Comparações ---
+
+def p_comparation(p):
+    '''
+    operation : EQ expression expression
+              | EQL expression expression
+              | EQUAL expression expression
+              | EQUALP expression expression
+              | NUM_EQ expression expression
+              | NUM_NEQ expression expression
+              | GT expression expression
+              | GTE expression expression
+              | LT expression expression
+              | LTE expression expression
+    '''
+    p[0] = (p[1], p[2], p[3])
+
+# --- Erros ---
+
+def p_error(p):
+    if p:
+        print("Erro de sintaxe! Token:", p.type, "Valor:", p.value)
     else:
-        t.type = reserved.get(t.value, 'ID') # a verificação é no dicionário de palavras reservadas
-    return t
+        print("Erro de sintaxe: EOF inesperado")
 
-def t_coment(t):
-    r';.*'
-    pass
-
-# Regras auxiliares
-t_ignore = ' \t'
-
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += len(t.value)
-
-def t_error(t):
-    print(f"Illegal character '{t.value[0]}' at line {t.lineno}")
-    t.lexer.skip(1)
-
-# Construção do lexer
-lexer = lex.lex()
-
-cmp_data = '''
-(defun soma (lista)
-    (if (eq lista nil) 0
-        (+ (car lista) (soma (cdr lista)))))
-		
-(defun ordenar (lista)
-    (if (eq lista nil) nil
-        (cons (menor (car lista) (cdr lista))
-              (retirar (menor (car lista) (cdr lista)) lista))))
-(defun menor (atual lista)
-    (if (eq lista nil) atual
-        (if (< (car lista) atual)
-            (menor (car lista) (cdr lista))
-            (menor atual (cdr lista)))))
-(defun retirar (elem lista)
-    (cond
-        ((eq lista nil) nil)
-        ((equalp elem (car lista)) (cdr lista))
-        (T (cons (car lista) (retirar elem (cdr lista))))))
-'''
-
-# fornece os dados de teste
-lexer.input(cmp_data)
-
-print("Data (instructions):\n", cmp_data)
-print("Token list:\n")
-
-# imprime os tokens
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
+parser = yacc()
