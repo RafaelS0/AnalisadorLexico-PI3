@@ -118,37 +118,3 @@ def t_error(t):
 
 # Construção do lexer
 lexer = lex.lex()
-
-cmp_data = '''
-(defun soma (lista)
-    (if (eq lista nil) 0
-        (+ (car lista) (soma (cdr lista)))))
-		
-(defun ordenar (lista)
-    (if (eq lista nil) nil
-        (cons (menor (car lista) (cdr lista))
-              (retirar (menor (car lista) (cdr lista)) lista))))
-(defun menor (atual lista)
-    (if (eq lista nil) atual
-        (if (< (car lista) atual)
-            (menor (car lista) (cdr lista))
-            (menor atual (cdr lista)))))
-(defun retirar (elem lista)
-    (cond
-        ((eq lista nil) nil)
-        ((equalp elem (car lista)) (cdr lista))
-        (T (cons (car lista) (retirar elem (cdr lista))))))
-'''
-
-# fornece os dados de teste
-lexer.input(cmp_data)
-
-print("Data (instructions):\n", cmp_data)
-print("Token list:\n")
-
-# imprime os tokens
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)
