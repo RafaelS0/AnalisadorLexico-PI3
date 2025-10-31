@@ -31,5 +31,5 @@ class CodeGenerator:
         
         result = self.gen_expression(body)
         
-        self.emit("RETURN", result, None, None)
-        self.emit("FUNC_END", name, None, None)
+        self.add_inst("RETURN", result, None, None)
+        self.add_inst("FUNC_END", name, None, None)
