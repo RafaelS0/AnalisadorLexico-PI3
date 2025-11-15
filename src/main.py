@@ -1,20 +1,49 @@
 from parser import parser
+from tokens import lexer
+from codegen import CodeGenerator
 
-code = """
-(defun soma (lista)
-    (if (eq lista nil) 0
-        (+ (car lista) (soma (cdr lista)))))
-		
-(defun ordenar (lista)
-    (if (eq lista nil) nil
-        (cons (menor (car lista) (cdr lista))
-              (retirar (menor (car lista) (cdr lista)) lista))))
-(defun menor (atual lista)
-    (if (eq lista nil) atual
-        (if (< (car lista) atual)
-            (menor (car lista) (cdr lista))
-            (menor atual (cdr lista)))))
-"""
+# ==============================
+#     Gerar e imprimir a análise léxica
+# ==============================
 
-ast = parser.parse(code)
+# Abre o arquivo com o código e o lê
+with open("lisp_code.txt") as f:
+    code = f.read()
+
+# Alimenta o lexer
+lexer.input(code)
+
+# Imprime a análise léxica
+print("\n")
+for tok in lexer:
+    print(tok)
+
+# ==============================
+#     Gerar e imprimir a AST
+# ==============================
+
+# Abre o arquivo com o código e o lê
+with open("lisp_code.txt", "r") as file:
+    code = file.read()
+
+# Alimenta o parser
+ast = parser.parse(code, lexer=lexer)
+
+# Imprime a AST
+print("\n")
 print(ast)
+
+# ==============================
+#     Gerar e imprimir o código intermediário
+# ==============================
+
+# Cria uma intância do gerador de código intermediário
+generator = CodeGenerator()
+
+# Alimenta e o gerador e gear o código intermediário
+intermediate = generator.generate(ast)
+
+# Imprime o código intermediário
+print("\n")
+for instr in intermediate:
+    print(instr)
