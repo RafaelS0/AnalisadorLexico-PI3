@@ -1,6 +1,7 @@
 from parser import parser
 from tokens import lexer
 from codegen import CodeGenerator
+from ast_formatter import print_organized_ast
 
 # ==============================
 #     Gerar e imprimir a análise léxica
@@ -29,9 +30,12 @@ with open("lisp_code.txt", "r") as file:
 # Alimenta o parser
 ast = parser.parse(code, lexer=lexer)
 
-# Imprime a AST
-print("\n")
-print(ast)
+
+# Imprime AST em formato de árvore
+print("\n=== AST ===")
+print_organized_ast(ast)
+
+
 
 # ==============================
 #     Gerar e imprimir o código intermediário
