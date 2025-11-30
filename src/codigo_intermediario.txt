@@ -1,108 +1,110 @@
-  1: ('FUNC_BEGIN', 'soma', None, None)
-  2: ('PARAM_DEF', 'lista', None, None)
-  3: ('CMP_eq', 'lista', 'nil', 't1')
-  4: ('IF_TRUE_GOTO', 't1', None, 'L1')
-  5: ('CAR', 'lista', None, 't3')
-  6: ('CDR', 'lista', None, 't4')
-  7: ('PARAM', 't4', None, None)
-  8: ('CALL', 'soma', 1, 't5')
-  9: ('+', 't3', 't5', 't6')
- 10: ('ASSIGN', 't6', None, 't2')
- 11: ('GOTO', None, None, 'L3')
- 12: ('LABEL', None, None, 'L1')
- 13: ('ASSIGN', 0, None, 't7')
- 14: ('ASSIGN', 't7', None, 't2')
- 15: ('LABEL', None, None, 'L3')
- 16: ('RETURN', 't2', None, None)
- 17: ('FUNC_END', 'soma', None, None)
- 18: ('FUNC_BEGIN', 'ordenar', None, None)
- 19: ('PARAM_DEF', 'lista', None, None)
- 20: ('CMP_eq', 'lista', 'nil', 't8')
- 21: ('IF_TRUE_GOTO', 't8', None, 'L4')
- 22: ('CAR', 'lista', None, 't10')
- 23: ('PARAM', 't10', None, None)
- 24: ('CDR', 'lista', None, 't11')
- 25: ('PARAM', 't11', None, None)
- 26: ('CALL', 'menor', 2, 't12')
- 27: ('CAR', 'lista', None, 't13')
- 28: ('PARAM', 't13', None, None)
- 29: ('CDR', 'lista', None, 't14')
- 30: ('PARAM', 't14', None, None)
- 31: ('CALL', 'menor', 2, 't15')
- 32: ('PARAM', 't15', None, None)
- 33: ('PARAM', 'lista', None, None)
- 34: ('CALL', 'retirar', 2, 't16')
- 35: ('CONS', 't12', 't16', 't17')
- 36: ('ASSIGN', 't17', None, 't9')
- 37: ('GOTO', None, None, 'L6')
- 38: ('LABEL', None, None, 'L4')
- 39: ('ASSIGN', 'nil', None, 't18')
- 40: ('ASSIGN', 't18', None, 't9')
- 41: ('LABEL', None, None, 'L6')
- 42: ('RETURN', 't9', None, None)
- 43: ('FUNC_END', 'ordenar', None, None)
- 44: ('FUNC_BEGIN', 'menor', None, None)
- 45: ('PARAM_DEF', 'atual', None, None)
- 46: ('PARAM_DEF', 'lista', None, None)
- 47: ('CMP_eq', 'lista', 'nil', 't19')
- 48: ('IF_TRUE_GOTO', 't19', None, 'L7')
- 49: ('CAR', 'lista', None, 't21')
- 50: ('CMP_<', 't21', 'atual', 't22')
- 51: ('IF_TRUE_GOTO', 't22', None, 'L10')
- 52: ('PARAM', 'atual', None, None)
- 53: ('CDR', 'lista', None, 't24')
- 54: ('PARAM', 't24', None, None)
- 55: ('CALL', 'menor', 2, 't25')
- 56: ('ASSIGN', 't25', None, 't23')
- 57: ('GOTO', None, None, 'L12')
- 58: ('LABEL', None, None, 'L10')
- 59: ('CAR', 'lista', None, 't26')
- 60: ('PARAM', 't26', None, None)
- 61: ('CDR', 'lista', None, 't27')
- 62: ('PARAM', 't27', None, None)
- 63: ('CALL', 'menor', 2, 't28')
- 64: ('ASSIGN', 't28', None, 't23')
- 65: ('LABEL', None, None, 'L12')
- 66: ('ASSIGN', 't23', None, 't20')
- 67: ('GOTO', None, None, 'L9')
- 68: ('LABEL', None, None, 'L7')
- 69: ('ASSIGN', 'atual', None, 't29')
- 70: ('ASSIGN', 't29', None, 't20')
- 71: ('LABEL', None, None, 'L9')
- 72: ('RETURN', 't20', None, None)
- 73: ('FUNC_END', 'menor', None, None)
- 74: ('FUNC_BEGIN', 'retirar', None, None)
- 75: ('PARAM_DEF', 'elem', None, None)
- 76: ('PARAM_DEF', 'lista', None, None)
- 77: ('CMP_eq', 'lista', 'nil', 't31')
- 78: ('IF_TRUE_GOTO', 't31', None, 'L14')
- 79: ('GOTO', None, None, 'L15')
- 80: ('LABEL', None, None, 'L14')
- 81: ('ASSIGN', 'nil', None, 't32')
- 82: ('ASSIGN', 't32', None, 't30')
- 83: ('GOTO', None, None, 'L13')
- 84: ('LABEL', None, None, 'L15')
- 85: ('CAR', 'lista', None, 't33')
- 86: ('CMP_equalp', 'elem', 't33', 't34')
- 87: ('IF_TRUE_GOTO', 't34', None, 'L16')
- 88: ('GOTO', None, None, 'L17')
- 89: ('LABEL', None, None, 'L16')
- 90: ('CDR', 'lista', None, 't35')
- 91: ('ASSIGN', 't35', None, 't30')
- 92: ('GOTO', None, None, 'L13')
- 93: ('LABEL', None, None, 'L17')
- 94: ('IF_TRUE_GOTO', 'T', None, 'L18')
- 95: ('GOTO', None, None, 'L19')
- 96: ('LABEL', None, None, 'L18')
- 97: ('CAR', 'lista', None, 't36')
- 98: ('PARAM', 'elem', None, None)
- 99: ('CDR', 'lista', None, 't37')
-100: ('PARAM', 't37', None, None)
-101: ('CALL', 'retirar', 2, 't38')
-102: ('CONS', 't36', 't38', 't39')
-103: ('ASSIGN', 't39', None, 't30')
-104: ('GOTO', None, None, 'L13')
-105: ('LABEL', None, None, 'L19')
-106: ('LABEL', None, None, 'L13')
-107: ('RETURN', 't30', None, None)
-108: ('FUNC_END', 'retirar', None, None)
+[
+   ('FUNC_BEGIN', 'soma', None, None),
+   ('PARAM_DEF', 'lista', None, None),
+   ('CMP_eq', 'lista', 'nil', 't1'),
+   ('IF_TRUE_GOTO', 't1', None, 'L1'),
+   ('CAR', 'lista', None, 't3'),
+   ('CDR', 'lista', None, 't4'),
+   ('PARAM', 't4', None, None),
+   ('CALL', 'soma', 1, 't5'),
+   ('+', 't3', 't5', 't6'),
+   ('ASSIGN', 't6', None, 't2'),
+   ('GOTO', None, None, 'L3'),
+   ('LABEL', None, None, 'L1'),
+   ('ASSIGN', 0, None, 't7'),
+   ('ASSIGN', 't7', None, 't2'),
+   ('LABEL', None, None, 'L3'),
+   ('RETURN', 't2', None, None),
+   ('FUNC_END', 'soma', None, None),
+   ('FUNC_BEGIN', 'ordenar', None, None),
+   ('PARAM_DEF', 'lista', None, None),
+   ('CMP_eq', 'lista', 'nil', 't8'),
+   ('IF_TRUE_GOTO', 't8', None, 'L4'),
+   ('CAR', 'lista', None, 't10'),
+   ('PARAM', 't10', None, None),
+   ('CDR', 'lista', None, 't11'),
+   ('PARAM', 't11', None, None),
+   ('CALL', 'menor', 2, 't12'),
+   ('CAR', 'lista', None, 't13'),
+   ('PARAM', 't13', None, None),
+   ('CDR', 'lista', None, 't14'),
+   ('PARAM', 't14', None, None),
+   ('CALL', 'menor', 2, 't15'),
+   ('PARAM', 't15', None, None),
+   ('PARAM', 'lista', None, None),
+   ('CALL', 'retirar', 2, 't16'),
+   ('CONS', 't12', 't16', 't17'),
+   ('ASSIGN', 't17', None, 't9'),
+   ('GOTO', None, None, 'L6'),
+   ('LABEL', None, None, 'L4'),
+   ('ASSIGN', 'nil', None, 't18'),
+   ('ASSIGN', 't18', None, 't9'),
+   ('LABEL', None, None, 'L6'),
+   ('RETURN', 't9', None, None),
+   ('FUNC_END', 'ordenar', None, None),
+   ('FUNC_BEGIN', 'menor', None, None),
+   ('PARAM_DEF', 'atual', None, None),
+   ('PARAM_DEF', 'lista', None, None),
+   ('CMP_eq', 'lista', 'nil', 't19'),
+   ('IF_TRUE_GOTO', 't19', None, 'L7'),
+   ('CAR', 'lista', None, 't21'),
+   ('CMP_<', 't21', 'atual', 't22'),
+   ('IF_TRUE_GOTO', 't22', None, 'L10'),
+   ('PARAM', 'atual', None, None),
+   ('CDR', 'lista', None, 't24'),
+   ('PARAM', 't24', None, None),
+   ('CALL', 'menor', 2, 't25'),
+   ('ASSIGN', 't25', None, 't23'),
+   ('GOTO', None, None, 'L12'),
+   ('LABEL', None, None, 'L10'),
+   ('CAR', 'lista', None, 't26'),
+   ('PARAM', 't26', None, None),
+   ('CDR', 'lista', None, 't27'),
+   ('PARAM', 't27', None, None),
+   ('CALL', 'menor', 2, 't28'),
+   ('ASSIGN', 't28', None, 't23'),
+   ('LABEL', None, None, 'L12'),
+   ('ASSIGN', 't23', None, 't20'),
+   ('GOTO', None, None, 'L9'),
+   ('LABEL', None, None, 'L7'),
+   ('ASSIGN', 'atual', None, 't29'),
+   ('ASSIGN', 't29', None, 't20'),
+   ('LABEL', None, None, 'L9'),
+   ('RETURN', 't20', None, None),
+   ('FUNC_END', 'menor', None, None),
+   ('FUNC_BEGIN', 'retirar', None, None),
+   ('PARAM_DEF', 'elem', None, None),
+   ('PARAM_DEF', 'lista', None, None),
+   ('CMP_eq', 'lista', 'nil', 't31'),
+   ('IF_TRUE_GOTO', 't31', None, 'L14'),
+   ('GOTO', None, None, 'L15'),
+   ('LABEL', None, None, 'L14'),
+   ('ASSIGN', 'nil', None, 't32'),
+   ('ASSIGN', 't32', None, 't30'),
+   ('GOTO', None, None, 'L13'),
+   ('LABEL', None, None, 'L15'),
+   ('CAR', 'lista', None, 't33'),
+   ('CMP_equalp', 'elem', 't33', 't34'),
+   ('IF_TRUE_GOTO', 't34', None, 'L16'),
+   ('GOTO', None, None, 'L17'),
+   ('LABEL', None, None, 'L16'),
+   ('CDR', 'lista', None, 't35'),
+   ('ASSIGN', 't35', None, 't30'),
+   ('GOTO', None, None, 'L13'),
+   ('LABEL', None, None, 'L17'),
+   ('IF_TRUE_GOTO', 'T', None, 'L18'),
+   ('GOTO', None, None, 'L19'),
+   ('LABEL', None, None, 'L18'),
+   ('CAR', 'lista', None, 't36'),
+   ('PARAM', 'elem', None, None),
+   ('CDR', 'lista', None, 't37'),
+   ('PARAM', 't37', None, None),
+   ('CALL', 'retirar', 2, 't38'),
+   ('CONS', 't36', 't38', 't39'),
+   ('ASSIGN', 't39', None, 't30'),
+   ('GOTO', None, None, 'L13'),
+   ('LABEL', None, None, 'L19'),
+   ('LABEL', None, None, 'L13'),
+   ('RETURN', 't30', None, None),
+   ('FUNC_END', 'retirar', None, None)
+]

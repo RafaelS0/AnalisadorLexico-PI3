@@ -3,6 +3,7 @@ from tokens import lexer
 from codegen import CodeGenerator
 from ast_formatter import print_organized_ast
 
+
 # ==============================
 #     Gerar e imprimir a análise léxica
 # ==============================
@@ -36,7 +37,6 @@ print("\n=== AST ===")
 print_organized_ast(ast)
 
 
-
 # ==============================
 #     Gerar e imprimir o código intermediário
 # ==============================
@@ -52,9 +52,19 @@ print("\n=== Código Intermediário ===")
 for instr in intermediate:
     print(instr)
 
-# Escreve o código intermediário em um arquivo
+# Escreve o código intermediário em um arquivo no formato de lista
 with open("codigo_intermediario.txt", "w") as f:
+    f.write("[\n")
     for i, instr in enumerate(intermediate):
-        f.write(f"{i+1:3d}: {instr}\n")
+        f.write(f"   {repr(instr)}")
+        if i < len(intermediate) - 1:
+            f.write(",")
+        f.write("\n")
+    f.write("]")
 
-print("\n[INFO] Código intermediário salvo em 'codigo_intermediario.txt'")
+print("\n Código intermediário salvo em 'codigo_intermediario.txt'")
+
+# ==============================
+#     Executar código intermediário
+# ==============================
+
