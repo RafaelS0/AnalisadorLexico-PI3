@@ -47,7 +47,14 @@ generator = CodeGenerator()
 # Alimenta e o gerador e gear o código intermediário
 intermediate = generator.generate(ast)
 
-# Imprime o código intermediário
-print("\n")
+# Imprime o código intermediário no terminal
+print("\n=== Código Intermediário ===")
 for instr in intermediate:
     print(instr)
+
+# Escreve o código intermediário em um arquivo
+with open("codigo_intermediario.txt", "w") as f:
+    for i, instr in enumerate(intermediate):
+        f.write(f"{i+1:3d}: {instr}\n")
+
+print("\n[INFO] Código intermediário salvo em 'codigo_intermediario.txt'")
