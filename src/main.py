@@ -2,6 +2,7 @@ from parser import parser
 from tokens import lexer
 from codegen import CodeGenerator
 from ast_formatter import print_organized_ast
+from interpreter import Interpreter
 
 
 # ==============================
@@ -68,3 +69,22 @@ print("\n Código intermediário salvo em 'codigo_intermediario.txt'")
 #     Executar código intermediário
 # ==============================
 
+print("\n=== Executando Código Intermediário ===")
+interpreter = Interpreter()
+interpreter.execute(intermediate)
+
+
+# Teste 1: soma de lista [1, 2, 3]
+print("\nTeste: (soma '(1 2 3))")
+result = interpreter.call_function(intermediate, 'soma', [[1, 2, 3]])
+print(f"Resultado: {result}")
+
+# Teste 2: menor elemento
+print("\nTeste: (menor 5 '(3 7 2))")
+result = interpreter.call_function(intermediate, 'menor', [5, [3, 7, 2]])
+print(f"Resultado: {result}")
+
+# Teste 3: retirar elemento
+print("\nTeste: (retirar 2 '(1 2 3 2 4))")
+result = interpreter.call_function(intermediate, 'retirar', [2, [1, 2, 3, 2, 4]])
+print(f"Resultado: {result}")
