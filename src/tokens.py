@@ -95,8 +95,13 @@ def t_STRING(t):
 
 def t_SYMBOL(t):
     r'[a-zA-Z_][a-zA-Z_0-9-]*'
-    if t.value == 'T':
+    lower_val = t.value.lower() # converte para minúsculas para comparação
+    if lower_val == 't':
         t.type = 'T'
+        t.value = 'T'
+    elif lower_val == 'nil':
+        t.type = 'NIL'
+        t.value = 'nil'
     else:
         t.type = reserved.get(t.value, 'ID') # a verificação é no dicionário de palavras reservadas
     return t

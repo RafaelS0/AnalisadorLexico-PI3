@@ -12,7 +12,7 @@ class Interpreter:
         """Executa o código intermediário.
         
         Primeira passagem: registra todas as funções definidas no código.
-        Isso permite que funções chamem outras funções (inclusive recursivamente).
+        Segunda passagem: executa expressões soltas.
         
         Args:
             code (list): Lista de tuplas representando instruções do CI
@@ -22,14 +22,44 @@ class Interpreter:
         current_func = None
         for pc, instr in enumerate(code):
             if instr[0] == 'FUNC_BEGIN':
-                # Início de uma função: guarda nome, posição inicial e lista de parâmetros
                 current_func = {'name': instr[1], 'start': pc, 'params': []}
             elif instr[0] == 'PARAM_DEF':
-                # Adiciona parâmetro à lista de parâmetros da função atual
                 current_func['params'].append(instr[1])
             elif instr[0] == 'FUNC_END':
-                # Fim da função: registra no dicionário de funções
                 self.functions[instr[1]] = current_func
+        
+        # SEGUNDA PASSAGEM: Executar expressões soltas
+        pc = 0
+        while pc < len(code):
+            instr = code[pc]
+            op = instr[0]
+            
+            # Pula definições de funções
+            if op == 'FUNC_BEGIN':
+                # Encontra o FUNC_END correspondente
+                func_name = instr[1]
+                while pc < len(code) and not (code[pc][0] == 'FUNC_END' and code[pc][1] == func_name):
+                    pc += 1
+                pc += 1
+                continue
+            
+            # Executa expressões soltas
+            if op == 'RESULT':
+                result = self.get_value(instr[1])
+                print(f"=> {result if result != [] else 'NIL'}")
+            elif op in ['+', '-', '*', '/', 'floor', 'mod', 'expt']:
+                left = self.get_value(instr[1])
+                right = self.get_value(instr[2])
+                if op == '+': result = left + right
+                elif op == '-': result = left - right
+                elif op == '*': result = left * right
+                elif op == '/': result = left // right
+                elif op == 'floor': result = left // right
+                elif op == 'mod': result = left % right
+                elif op == 'expt': result = left ** right
+                self.memory[instr[3]] = result
+            
+            pc += 1
                 
     def get_value(self, val):
         """Resolve o valor real de uma variável ou literal.
@@ -46,11 +76,11 @@ class Interpreter:
         # Literais numéricos e listas já são valores finais
         if isinstance(val, (int, list)):
             return val
-        # nil em Lisp é representado como lista vazia
-        if val == 'nil':
+        # nil em Lisp é representado como lista vazia (case-insensitive)
+        if isinstance(val, str) and val.lower() == 'nil':
             return []
-        # T em Lisp é o valor booleano verdadeiro
-        if val == 'T':
+        # T em Lisp é o valor booleano verdadeiro (case-insensitive)
+        if isinstance(val, str) and val.upper() == 'T':
             return True
         # Se é uma variável temporária (t1, t2, ...), resolve recursivamente
         if isinstance(val, str) and val in self.memory:
@@ -216,6 +246,10 @@ class Interpreter:
                 result = self.get_value(instr[1])  # Resolve valor de retorno
                 self.memory = old_memory           # Restaura escopo anterior
                 return result
+            
+            # RESULT: Já tratado no execute principal
+            elif op == 'RESULT':
+                pass
                 
             pc += 1  # Avança para próxima instrução
         

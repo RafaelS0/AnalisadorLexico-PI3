@@ -63,28 +63,76 @@ with open("codigo_intermediario.txt", "w") as f:
         f.write("\n")
     f.write("]")
 
+
+interpreter = Interpreter() # Instanciando o interpretador
+
+
+# ==============================
+#     Executar código intermediário 
+# ==============================
+
+# TESTE: Executar código CLisp diretamente pela main.py
+print("\n=== Teste de Operações Aritméticas ===")
+
+# Teste 1: Subtração
+lisp_code_sub = "(- 5 3 )"
+lexer.input(lisp_code_sub)  # Resetar lexer
+ast_sub = parser.parse(lisp_code_sub, lexer=lexer)
+generator_sub = CodeGenerator()
+intermediate_sub = generator_sub.generate(ast_sub)
+print("Executando: (- 5 3)")
+interpreter.execute(intermediate_sub)
+
+# Teste 2: Divisão
+lisp_code_div = "(/ 20 4)"
+lexer.input(lisp_code_div)  # Resetar lexer
+ast_div = parser.parse(lisp_code_div, lexer=lexer)
+generator_div = CodeGenerator()
+intermediate_div = generator_div.generate(ast_div)
+print("Executando: (/ 20 4)")
+interpreter.execute(intermediate_div)
+
+# Teste 3: Multiplicação
+lisp_code_mult = "(* 2 3)"
+lexer.input(lisp_code_mult)  # Resetar lexer
+ast_mult = parser.parse(lisp_code_mult, lexer=lexer)
+generator_mult = CodeGenerator()
+intermediate_mult = generator_mult.generate(ast_mult)
+print("Executando: (* 2 3)")
+interpreter.execute(intermediate_mult)
+
+# Teste 4: Potência
+lisp_code_expt = "(expt 2 3)"
+lexer.input(lisp_code_expt)  # Resetar lexer
+ast_expt = parser.parse(lisp_code_expt, lexer=lexer)
+generator_expt = CodeGenerator()
+intermediate_expt = generator_expt.generate(ast_expt)
+print("Executando: (expt 2 3)")
+interpreter.execute(intermediate_expt)
+
+
+
+
+
+
 print("\n Código intermediário salvo em 'codigo_intermediario.txt'")
-
-# ==============================
-#     Executar código intermediário
-# ==============================
-
-print("\n=== Executando Código Intermediário ===")
-interpreter = Interpreter()
 interpreter.execute(intermediate)
-
 
 # Teste 1: soma de lista [1, 2, 3]
 print("\nTeste: (soma '(1 2 3))")
-result = interpreter.call_function(intermediate, 'soma', [[1, 2, 3]])
+result = interpreter.call_function(intermediate, 'soma', [[1, 2]])
 print(f"Resultado: {result}")
 
 # Teste 2: menor elemento
 print("\nTeste: (menor 5 '(3 7 2))")
-result = interpreter.call_function(intermediate, 'menor', [5, [3, 7, 2]])
+result = interpreter.call_function(intermediate, 'menor', [5, [1, 7, 4]])
 print(f"Resultado: {result}")
 
 # Teste 3: retirar elemento
 print("\nTeste: (retirar 2 '(1 2 3 2 4))")
-result = interpreter.call_function(intermediate, 'retirar', [2, [1, 2, 3, 2, 4]])
+result = interpreter.call_function(intermediate, 'retirar', [6, [1, 2, 3, 2, 4]])
 print(f"Resultado: {result}")
+
+
+
+

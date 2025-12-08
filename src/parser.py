@@ -97,8 +97,12 @@ def p_term(p):
          | ID
          | NIL
          | T
+         | LPAREN RPAREN
     '''
-    p[0] = p[1]
+    if len(p) == 3:  # () -> nil se a lista estiver vazia retorna NIL
+        p[0] = 'nil'
+    else:
+        p[0] = p[1]
 
 # ===========================================
 #                OPERAÇÕES

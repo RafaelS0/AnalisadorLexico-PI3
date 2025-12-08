@@ -32,99 +32,100 @@ Rule 12    term -> NUM
 Rule 13    term -> ID
 Rule 14    term -> NIL
 Rule 15    term -> T
-Rule 16    operation -> if
-Rule 17    operation -> arith
-Rule 18    operation -> comparation
-Rule 19    operation -> call
-Rule 20    operation -> especial_1
-Rule 21    operation -> especial_2
-Rule 22    if -> IF expression expression expression
-Rule 23    arith -> PLUS expression expression
-Rule 24    arith -> MINUS expression expression
-Rule 25    arith -> TIMES expression expression
-Rule 26    arith -> DIVIDE expression expression
-Rule 27    arith -> FLOOR expression expression
-Rule 28    arith -> MOD expression expression
-Rule 29    arith -> EXPT expression expression
-Rule 30    comparation -> EQ expression expression
-Rule 31    comparation -> EQL expression expression
-Rule 32    comparation -> EQUAL expression expression
-Rule 33    comparation -> EQUALP expression expression
-Rule 34    comparation -> NUM_EQ expression expression
-Rule 35    comparation -> NUM_NEQ expression expression
-Rule 36    comparation -> GT expression expression
-Rule 37    comparation -> GTE expression expression
-Rule 38    comparation -> LT expression expression
-Rule 39    comparation -> LTE expression expression
-Rule 40    call -> ID arglist
-Rule 41    arglist -> expression arglist
-Rule 42    arglist -> <empty>
-Rule 43    especial_1 -> CAR expression
-Rule 44    especial_1 -> CDR expression
-Rule 45    especial_1 -> COND cond_clauses
-Rule 46    cond_clauses -> <empty>
-Rule 47    cond_clauses -> cond_clause cond_clauses
-Rule 48    cond_clause -> LPAREN expression expression RPAREN
-Rule 49    especial_2 -> CONS expression expression
+Rule 16    term -> LPAREN RPAREN
+Rule 17    operation -> if
+Rule 18    operation -> arith
+Rule 19    operation -> comparation
+Rule 20    operation -> call
+Rule 21    operation -> especial_1
+Rule 22    operation -> especial_2
+Rule 23    if -> IF expression expression expression
+Rule 24    arith -> PLUS expression expression
+Rule 25    arith -> MINUS expression expression
+Rule 26    arith -> TIMES expression expression
+Rule 27    arith -> DIVIDE expression expression
+Rule 28    arith -> FLOOR expression expression
+Rule 29    arith -> MOD expression expression
+Rule 30    arith -> EXPT expression expression
+Rule 31    comparation -> EQ expression expression
+Rule 32    comparation -> EQL expression expression
+Rule 33    comparation -> EQUAL expression expression
+Rule 34    comparation -> EQUALP expression expression
+Rule 35    comparation -> NUM_EQ expression expression
+Rule 36    comparation -> NUM_NEQ expression expression
+Rule 37    comparation -> GT expression expression
+Rule 38    comparation -> GTE expression expression
+Rule 39    comparation -> LT expression expression
+Rule 40    comparation -> LTE expression expression
+Rule 41    call -> ID arglist
+Rule 42    arglist -> expression arglist
+Rule 43    arglist -> <empty>
+Rule 44    especial_1 -> CAR expression
+Rule 45    especial_1 -> CDR expression
+Rule 46    especial_1 -> COND cond_clauses
+Rule 47    cond_clauses -> <empty>
+Rule 48    cond_clauses -> cond_clause cond_clauses
+Rule 49    cond_clause -> LPAREN expression expression RPAREN
+Rule 50    especial_2 -> CONS expression expression
 
 Terminals, with rules where they appear
 
 AND                  : 
-CAR                  : 43
-CDR                  : 44
-COND                 : 45
-CONS                 : 49
+CAR                  : 44
+CDR                  : 45
+COND                 : 46
+CONS                 : 50
 DEFUN                : 6
-DIVIDE               : 26
-EQ                   : 30
-EQL                  : 31
-EQUAL                : 32
-EQUALP               : 33
-EXPT                 : 29
-FLOOR                : 27
-GT                   : 36
-GTE                  : 37
-ID                   : 6 7 8 13 40
-IF                   : 22
+DIVIDE               : 27
+EQ                   : 31
+EQL                  : 32
+EQUAL                : 33
+EQUALP               : 34
+EXPT                 : 30
+FLOOR                : 28
+GT                   : 37
+GTE                  : 38
+ID                   : 6 7 8 13 41
+IF                   : 23
 LBRACE               : 
 LBRACKET             : 
 LIST                 : 
-LPAREN               : 6 6 11 48
-LT                   : 38
-LTE                  : 39
-MINUS                : 24
-MOD                  : 28
+LPAREN               : 6 6 11 16 49
+LT                   : 39
+LTE                  : 40
+MINUS                : 25
+MOD                  : 29
 NIL                  : 14
 NOT                  : 
 NUM                  : 12
-NUM_EQ               : 34
-NUM_NEQ              : 35
+NUM_EQ               : 35
+NUM_NEQ              : 36
 OR                   : 
-PLUS                 : 23
+PLUS                 : 24
 RBRACE               : 
 RBRACKET             : 
-RPAREN               : 6 6 11 48
+RPAREN               : 6 6 11 16 49
 STRING               : 
 STRING_EQ            : 
 STRING_EQUAL         : 
 T                    : 15
-TIMES                : 25
+TIMES                : 26
 error                : 
 
 Nonterminals, with rules where they appear
 
-arglist              : 40 41
-arith                : 17
+arglist              : 41 42
+arith                : 18
 block                : 2 3
-call                 : 19
-comparation          : 18
-cond_clause          : 47
-cond_clauses         : 45 47
-especial_1           : 20
-especial_2           : 21
-expression           : 5 6 22 22 22 23 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 41 43 44 48 48 49 49
+call                 : 20
+comparation          : 19
+cond_clause          : 48
+cond_clauses         : 46 48
+especial_1           : 21
+especial_2           : 22
+expression           : 5 6 23 23 23 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 42 44 45 49 49 50 50
 function             : 4
-if                   : 16
+if                   : 17
 operation            : 11
 param_list           : 6 7
 program              : 0
@@ -148,6 +149,7 @@ state 0
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
     LPAREN          shift and go to state 6
     NUM             shift and go to state 9
@@ -181,6 +183,7 @@ state 2
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
     $end            reduce using rule 1 (program -> sequence .)
     LPAREN          shift and go to state 6
@@ -234,68 +237,70 @@ state 6
 
     (6) function -> LPAREN . DEFUN ID LPAREN param_list RPAREN expression RPAREN
     (11) expression -> LPAREN . operation RPAREN
-    (16) operation -> . if
-    (17) operation -> . arith
-    (18) operation -> . comparation
-    (19) operation -> . call
-    (20) operation -> . especial_1
-    (21) operation -> . especial_2
-    (22) if -> . IF expression expression expression
-    (23) arith -> . PLUS expression expression
-    (24) arith -> . MINUS expression expression
-    (25) arith -> . TIMES expression expression
-    (26) arith -> . DIVIDE expression expression
-    (27) arith -> . FLOOR expression expression
-    (28) arith -> . MOD expression expression
-    (29) arith -> . EXPT expression expression
-    (30) comparation -> . EQ expression expression
-    (31) comparation -> . EQL expression expression
-    (32) comparation -> . EQUAL expression expression
-    (33) comparation -> . EQUALP expression expression
-    (34) comparation -> . NUM_EQ expression expression
-    (35) comparation -> . NUM_NEQ expression expression
-    (36) comparation -> . GT expression expression
-    (37) comparation -> . GTE expression expression
-    (38) comparation -> . LT expression expression
-    (39) comparation -> . LTE expression expression
-    (40) call -> . ID arglist
-    (43) especial_1 -> . CAR expression
-    (44) especial_1 -> . CDR expression
-    (45) especial_1 -> . COND cond_clauses
-    (49) especial_2 -> . CONS expression expression
+    (16) term -> LPAREN . RPAREN
+    (17) operation -> . if
+    (18) operation -> . arith
+    (19) operation -> . comparation
+    (20) operation -> . call
+    (21) operation -> . especial_1
+    (22) operation -> . especial_2
+    (23) if -> . IF expression expression expression
+    (24) arith -> . PLUS expression expression
+    (25) arith -> . MINUS expression expression
+    (26) arith -> . TIMES expression expression
+    (27) arith -> . DIVIDE expression expression
+    (28) arith -> . FLOOR expression expression
+    (29) arith -> . MOD expression expression
+    (30) arith -> . EXPT expression expression
+    (31) comparation -> . EQ expression expression
+    (32) comparation -> . EQL expression expression
+    (33) comparation -> . EQUAL expression expression
+    (34) comparation -> . EQUALP expression expression
+    (35) comparation -> . NUM_EQ expression expression
+    (36) comparation -> . NUM_NEQ expression expression
+    (37) comparation -> . GT expression expression
+    (38) comparation -> . GTE expression expression
+    (39) comparation -> . LT expression expression
+    (40) comparation -> . LTE expression expression
+    (41) call -> . ID arglist
+    (44) especial_1 -> . CAR expression
+    (45) especial_1 -> . CDR expression
+    (46) especial_1 -> . COND cond_clauses
+    (50) especial_2 -> . CONS expression expression
 
     DEFUN           shift and go to state 13
-    IF              shift and go to state 22
-    PLUS            shift and go to state 23
-    MINUS           shift and go to state 24
-    TIMES           shift and go to state 25
-    DIVIDE          shift and go to state 26
-    FLOOR           shift and go to state 27
-    MOD             shift and go to state 28
-    EXPT            shift and go to state 29
-    EQ              shift and go to state 30
-    EQL             shift and go to state 31
-    EQUAL           shift and go to state 32
-    EQUALP          shift and go to state 33
-    NUM_EQ          shift and go to state 34
-    NUM_NEQ         shift and go to state 35
-    GT              shift and go to state 36
-    GTE             shift and go to state 37
-    LT              shift and go to state 38
-    LTE             shift and go to state 39
+    RPAREN          shift and go to state 15
+    IF              shift and go to state 23
+    PLUS            shift and go to state 24
+    MINUS           shift and go to state 25
+    TIMES           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    FLOOR           shift and go to state 28
+    MOD             shift and go to state 29
+    EXPT            shift and go to state 30
+    EQ              shift and go to state 31
+    EQL             shift and go to state 32
+    EQUAL           shift and go to state 33
+    EQUALP          shift and go to state 34
+    NUM_EQ          shift and go to state 35
+    NUM_NEQ         shift and go to state 36
+    GT              shift and go to state 37
+    GTE             shift and go to state 38
+    LT              shift and go to state 39
+    LTE             shift and go to state 40
     ID              shift and go to state 14
-    CAR             shift and go to state 40
-    CDR             shift and go to state 41
-    COND            shift and go to state 42
-    CONS            shift and go to state 43
+    CAR             shift and go to state 41
+    CDR             shift and go to state 42
+    COND            shift and go to state 43
+    CONS            shift and go to state 44
 
-    operation                      shift and go to state 15
-    if                             shift and go to state 16
-    arith                          shift and go to state 17
-    comparation                    shift and go to state 18
-    call                           shift and go to state 19
-    especial_1                     shift and go to state 20
-    especial_2                     shift and go to state 21
+    operation                      shift and go to state 16
+    if                             shift and go to state 17
+    arith                          shift and go to state 18
+    comparation                    shift and go to state 19
+    call                           shift and go to state 20
+    especial_1                     shift and go to state 21
+    especial_2                     shift and go to state 22
 
 state 7
 
@@ -378,111 +383,107 @@ state 13
 
     (6) function -> LPAREN DEFUN . ID LPAREN param_list RPAREN expression RPAREN
 
-    ID              shift and go to state 44
+    ID              shift and go to state 45
 
 
 state 14
 
-    (40) call -> ID . arglist
-    (41) arglist -> . expression arglist
-    (42) arglist -> .
+    (41) call -> ID . arglist
+    (42) arglist -> . expression arglist
+    (43) arglist -> .
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    RPAREN          reduce using rule 42 (arglist -> .)
-    LPAREN          shift and go to state 47
+    RPAREN          reduce using rule 43 (arglist -> .)
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
     T               shift and go to state 11
 
-    arglist                        shift and go to state 45
-    expression                     shift and go to state 46
+    arglist                        shift and go to state 46
+    expression                     shift and go to state 47
     term                           shift and go to state 8
 
 state 15
 
-    (11) expression -> LPAREN operation . RPAREN
+    (16) term -> LPAREN RPAREN .
 
-    RPAREN          shift and go to state 48
+    LPAREN          reduce using rule 16 (term -> LPAREN RPAREN .)
+    NUM             reduce using rule 16 (term -> LPAREN RPAREN .)
+    ID              reduce using rule 16 (term -> LPAREN RPAREN .)
+    NIL             reduce using rule 16 (term -> LPAREN RPAREN .)
+    T               reduce using rule 16 (term -> LPAREN RPAREN .)
+    $end            reduce using rule 16 (term -> LPAREN RPAREN .)
+    RPAREN          reduce using rule 16 (term -> LPAREN RPAREN .)
 
 
 state 16
 
-    (16) operation -> if .
+    (11) expression -> LPAREN operation . RPAREN
 
-    RPAREN          reduce using rule 16 (operation -> if .)
+    RPAREN          shift and go to state 49
 
 
 state 17
 
-    (17) operation -> arith .
+    (17) operation -> if .
 
-    RPAREN          reduce using rule 17 (operation -> arith .)
+    RPAREN          reduce using rule 17 (operation -> if .)
 
 
 state 18
 
-    (18) operation -> comparation .
+    (18) operation -> arith .
 
-    RPAREN          reduce using rule 18 (operation -> comparation .)
+    RPAREN          reduce using rule 18 (operation -> arith .)
 
 
 state 19
 
-    (19) operation -> call .
+    (19) operation -> comparation .
 
-    RPAREN          reduce using rule 19 (operation -> call .)
+    RPAREN          reduce using rule 19 (operation -> comparation .)
 
 
 state 20
 
-    (20) operation -> especial_1 .
+    (20) operation -> call .
 
-    RPAREN          reduce using rule 20 (operation -> especial_1 .)
+    RPAREN          reduce using rule 20 (operation -> call .)
 
 
 state 21
 
-    (21) operation -> especial_2 .
+    (21) operation -> especial_1 .
 
-    RPAREN          reduce using rule 21 (operation -> especial_2 .)
+    RPAREN          reduce using rule 21 (operation -> especial_1 .)
 
 
 state 22
 
-    (22) if -> IF . expression expression expression
-    (10) expression -> . term
-    (11) expression -> . LPAREN operation RPAREN
-    (12) term -> . NUM
-    (13) term -> . ID
-    (14) term -> . NIL
-    (15) term -> . T
+    (22) operation -> especial_2 .
 
-    LPAREN          shift and go to state 47
-    NUM             shift and go to state 9
-    ID              shift and go to state 7
-    NIL             shift and go to state 10
-    T               shift and go to state 11
+    RPAREN          reduce using rule 22 (operation -> especial_2 .)
 
-    expression                     shift and go to state 49
-    term                           shift and go to state 8
 
 state 23
 
-    (23) arith -> PLUS . expression expression
+    (23) if -> IF . expression expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -493,15 +494,16 @@ state 23
 
 state 24
 
-    (24) arith -> MINUS . expression expression
+    (24) arith -> PLUS . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -512,15 +514,16 @@ state 24
 
 state 25
 
-    (25) arith -> TIMES . expression expression
+    (25) arith -> MINUS . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -531,15 +534,16 @@ state 25
 
 state 26
 
-    (26) arith -> DIVIDE . expression expression
+    (26) arith -> TIMES . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -550,15 +554,16 @@ state 26
 
 state 27
 
-    (27) arith -> FLOOR . expression expression
+    (27) arith -> DIVIDE . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -569,15 +574,16 @@ state 27
 
 state 28
 
-    (28) arith -> MOD . expression expression
+    (28) arith -> FLOOR . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -588,15 +594,16 @@ state 28
 
 state 29
 
-    (29) arith -> EXPT . expression expression
+    (29) arith -> MOD . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -607,15 +614,16 @@ state 29
 
 state 30
 
-    (30) comparation -> EQ . expression expression
+    (30) arith -> EXPT . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -626,15 +634,16 @@ state 30
 
 state 31
 
-    (31) comparation -> EQL . expression expression
+    (31) comparation -> EQ . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -645,15 +654,16 @@ state 31
 
 state 32
 
-    (32) comparation -> EQUAL . expression expression
+    (32) comparation -> EQL . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -664,15 +674,16 @@ state 32
 
 state 33
 
-    (33) comparation -> EQUALP . expression expression
+    (33) comparation -> EQUAL . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -683,15 +694,16 @@ state 33
 
 state 34
 
-    (34) comparation -> NUM_EQ . expression expression
+    (34) comparation -> EQUALP . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -702,15 +714,16 @@ state 34
 
 state 35
 
-    (35) comparation -> NUM_NEQ . expression expression
+    (35) comparation -> NUM_EQ . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -721,15 +734,16 @@ state 35
 
 state 36
 
-    (36) comparation -> GT . expression expression
+    (36) comparation -> NUM_NEQ . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -740,15 +754,16 @@ state 36
 
 state 37
 
-    (37) comparation -> GTE . expression expression
+    (37) comparation -> GT . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -759,15 +774,16 @@ state 37
 
 state 38
 
-    (38) comparation -> LT . expression expression
+    (38) comparation -> GTE . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -778,15 +794,16 @@ state 38
 
 state 39
 
-    (39) comparation -> LTE . expression expression
+    (39) comparation -> LT . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -797,15 +814,16 @@ state 39
 
 state 40
 
-    (43) especial_1 -> CAR . expression
+    (40) comparation -> LTE . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -816,15 +834,16 @@ state 40
 
 state 41
 
-    (44) especial_1 -> CDR . expression
+    (44) especial_1 -> CAR . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -835,139 +854,163 @@ state 41
 
 state 42
 
-    (45) especial_1 -> COND . cond_clauses
-    (46) cond_clauses -> .
-    (47) cond_clauses -> . cond_clause cond_clauses
-    (48) cond_clause -> . LPAREN expression expression RPAREN
-
-    RPAREN          reduce using rule 46 (cond_clauses -> .)
-    LPAREN          shift and go to state 71
-
-    cond_clauses                   shift and go to state 69
-    cond_clause                    shift and go to state 70
-
-state 43
-
-    (49) especial_2 -> CONS . expression expression
+    (45) especial_1 -> CDR . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
     T               shift and go to state 11
 
-    expression                     shift and go to state 72
+    expression                     shift and go to state 69
     term                           shift and go to state 8
+
+state 43
+
+    (46) especial_1 -> COND . cond_clauses
+    (47) cond_clauses -> .
+    (48) cond_clauses -> . cond_clause cond_clauses
+    (49) cond_clause -> . LPAREN expression expression RPAREN
+
+    RPAREN          reduce using rule 47 (cond_clauses -> .)
+    LPAREN          shift and go to state 72
+
+    cond_clauses                   shift and go to state 70
+    cond_clause                    shift and go to state 71
 
 state 44
 
-    (6) function -> LPAREN DEFUN ID . LPAREN param_list RPAREN expression RPAREN
+    (50) especial_2 -> CONS . expression expression
+    (10) expression -> . term
+    (11) expression -> . LPAREN operation RPAREN
+    (12) term -> . NUM
+    (13) term -> . ID
+    (14) term -> . NIL
+    (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 73
+    LPAREN          shift and go to state 48
+    NUM             shift and go to state 9
+    ID              shift and go to state 7
+    NIL             shift and go to state 10
+    T               shift and go to state 11
 
+    expression                     shift and go to state 73
+    term                           shift and go to state 8
 
 state 45
 
-    (40) call -> ID arglist .
+    (6) function -> LPAREN DEFUN ID . LPAREN param_list RPAREN expression RPAREN
 
-    RPAREN          reduce using rule 40 (call -> ID arglist .)
+    LPAREN          shift and go to state 74
 
 
 state 46
 
-    (41) arglist -> expression . arglist
-    (41) arglist -> . expression arglist
-    (42) arglist -> .
+    (41) call -> ID arglist .
+
+    RPAREN          reduce using rule 41 (call -> ID arglist .)
+
+
+state 47
+
+    (42) arglist -> expression . arglist
+    (42) arglist -> . expression arglist
+    (43) arglist -> .
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    RPAREN          reduce using rule 42 (arglist -> .)
-    LPAREN          shift and go to state 47
+    RPAREN          reduce using rule 43 (arglist -> .)
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
     T               shift and go to state 11
 
-    expression                     shift and go to state 46
-    arglist                        shift and go to state 74
+    expression                     shift and go to state 47
+    arglist                        shift and go to state 75
     term                           shift and go to state 8
 
-state 47
+state 48
 
     (11) expression -> LPAREN . operation RPAREN
-    (16) operation -> . if
-    (17) operation -> . arith
-    (18) operation -> . comparation
-    (19) operation -> . call
-    (20) operation -> . especial_1
-    (21) operation -> . especial_2
-    (22) if -> . IF expression expression expression
-    (23) arith -> . PLUS expression expression
-    (24) arith -> . MINUS expression expression
-    (25) arith -> . TIMES expression expression
-    (26) arith -> . DIVIDE expression expression
-    (27) arith -> . FLOOR expression expression
-    (28) arith -> . MOD expression expression
-    (29) arith -> . EXPT expression expression
-    (30) comparation -> . EQ expression expression
-    (31) comparation -> . EQL expression expression
-    (32) comparation -> . EQUAL expression expression
-    (33) comparation -> . EQUALP expression expression
-    (34) comparation -> . NUM_EQ expression expression
-    (35) comparation -> . NUM_NEQ expression expression
-    (36) comparation -> . GT expression expression
-    (37) comparation -> . GTE expression expression
-    (38) comparation -> . LT expression expression
-    (39) comparation -> . LTE expression expression
-    (40) call -> . ID arglist
-    (43) especial_1 -> . CAR expression
-    (44) especial_1 -> . CDR expression
-    (45) especial_1 -> . COND cond_clauses
-    (49) especial_2 -> . CONS expression expression
+    (16) term -> LPAREN . RPAREN
+    (17) operation -> . if
+    (18) operation -> . arith
+    (19) operation -> . comparation
+    (20) operation -> . call
+    (21) operation -> . especial_1
+    (22) operation -> . especial_2
+    (23) if -> . IF expression expression expression
+    (24) arith -> . PLUS expression expression
+    (25) arith -> . MINUS expression expression
+    (26) arith -> . TIMES expression expression
+    (27) arith -> . DIVIDE expression expression
+    (28) arith -> . FLOOR expression expression
+    (29) arith -> . MOD expression expression
+    (30) arith -> . EXPT expression expression
+    (31) comparation -> . EQ expression expression
+    (32) comparation -> . EQL expression expression
+    (33) comparation -> . EQUAL expression expression
+    (34) comparation -> . EQUALP expression expression
+    (35) comparation -> . NUM_EQ expression expression
+    (36) comparation -> . NUM_NEQ expression expression
+    (37) comparation -> . GT expression expression
+    (38) comparation -> . GTE expression expression
+    (39) comparation -> . LT expression expression
+    (40) comparation -> . LTE expression expression
+    (41) call -> . ID arglist
+    (44) especial_1 -> . CAR expression
+    (45) especial_1 -> . CDR expression
+    (46) especial_1 -> . COND cond_clauses
+    (50) especial_2 -> . CONS expression expression
 
-    IF              shift and go to state 22
-    PLUS            shift and go to state 23
-    MINUS           shift and go to state 24
-    TIMES           shift and go to state 25
-    DIVIDE          shift and go to state 26
-    FLOOR           shift and go to state 27
-    MOD             shift and go to state 28
-    EXPT            shift and go to state 29
-    EQ              shift and go to state 30
-    EQL             shift and go to state 31
-    EQUAL           shift and go to state 32
-    EQUALP          shift and go to state 33
-    NUM_EQ          shift and go to state 34
-    NUM_NEQ         shift and go to state 35
-    GT              shift and go to state 36
-    GTE             shift and go to state 37
-    LT              shift and go to state 38
-    LTE             shift and go to state 39
+    RPAREN          shift and go to state 15
+    IF              shift and go to state 23
+    PLUS            shift and go to state 24
+    MINUS           shift and go to state 25
+    TIMES           shift and go to state 26
+    DIVIDE          shift and go to state 27
+    FLOOR           shift and go to state 28
+    MOD             shift and go to state 29
+    EXPT            shift and go to state 30
+    EQ              shift and go to state 31
+    EQL             shift and go to state 32
+    EQUAL           shift and go to state 33
+    EQUALP          shift and go to state 34
+    NUM_EQ          shift and go to state 35
+    NUM_NEQ         shift and go to state 36
+    GT              shift and go to state 37
+    GTE             shift and go to state 38
+    LT              shift and go to state 39
+    LTE             shift and go to state 40
     ID              shift and go to state 14
-    CAR             shift and go to state 40
-    CDR             shift and go to state 41
-    COND            shift and go to state 42
-    CONS            shift and go to state 43
+    CAR             shift and go to state 41
+    CDR             shift and go to state 42
+    COND            shift and go to state 43
+    CONS            shift and go to state 44
 
-    operation                      shift and go to state 15
-    if                             shift and go to state 16
-    arith                          shift and go to state 17
-    comparation                    shift and go to state 18
-    call                           shift and go to state 19
-    especial_1                     shift and go to state 20
-    especial_2                     shift and go to state 21
+    operation                      shift and go to state 16
+    if                             shift and go to state 17
+    arith                          shift and go to state 18
+    comparation                    shift and go to state 19
+    call                           shift and go to state 20
+    especial_1                     shift and go to state 21
+    especial_2                     shift and go to state 22
 
-state 48
+state 49
 
     (11) expression -> LPAREN operation RPAREN .
 
@@ -980,36 +1023,18 @@ state 48
     RPAREN          reduce using rule 11 (expression -> LPAREN operation RPAREN .)
 
 
-state 49
-
-    (22) if -> IF expression . expression expression
-    (10) expression -> . term
-    (11) expression -> . LPAREN operation RPAREN
-    (12) term -> . NUM
-    (13) term -> . ID
-    (14) term -> . NIL
-    (15) term -> . T
-
-    LPAREN          shift and go to state 47
-    NUM             shift and go to state 9
-    ID              shift and go to state 7
-    NIL             shift and go to state 10
-    T               shift and go to state 11
-
-    expression                     shift and go to state 75
-    term                           shift and go to state 8
-
 state 50
 
-    (23) arith -> PLUS expression . expression
+    (23) if -> IF expression . expression expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1020,15 +1045,16 @@ state 50
 
 state 51
 
-    (24) arith -> MINUS expression . expression
+    (24) arith -> PLUS expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1039,15 +1065,16 @@ state 51
 
 state 52
 
-    (25) arith -> TIMES expression . expression
+    (25) arith -> MINUS expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1058,15 +1085,16 @@ state 52
 
 state 53
 
-    (26) arith -> DIVIDE expression . expression
+    (26) arith -> TIMES expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1077,15 +1105,16 @@ state 53
 
 state 54
 
-    (27) arith -> FLOOR expression . expression
+    (27) arith -> DIVIDE expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1096,15 +1125,16 @@ state 54
 
 state 55
 
-    (28) arith -> MOD expression . expression
+    (28) arith -> FLOOR expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1115,15 +1145,16 @@ state 55
 
 state 56
 
-    (29) arith -> EXPT expression . expression
+    (29) arith -> MOD expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1134,15 +1165,16 @@ state 56
 
 state 57
 
-    (30) comparation -> EQ expression . expression
+    (30) arith -> EXPT expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1153,15 +1185,16 @@ state 57
 
 state 58
 
-    (31) comparation -> EQL expression . expression
+    (31) comparation -> EQ expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1172,15 +1205,16 @@ state 58
 
 state 59
 
-    (32) comparation -> EQUAL expression . expression
+    (32) comparation -> EQL expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1191,15 +1225,16 @@ state 59
 
 state 60
 
-    (33) comparation -> EQUALP expression . expression
+    (33) comparation -> EQUAL expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1210,15 +1245,16 @@ state 60
 
 state 61
 
-    (34) comparation -> NUM_EQ expression . expression
+    (34) comparation -> EQUALP expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1229,15 +1265,16 @@ state 61
 
 state 62
 
-    (35) comparation -> NUM_NEQ expression . expression
+    (35) comparation -> NUM_EQ expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1248,15 +1285,16 @@ state 62
 
 state 63
 
-    (36) comparation -> GT expression . expression
+    (36) comparation -> NUM_NEQ expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1267,15 +1305,16 @@ state 63
 
 state 64
 
-    (37) comparation -> GTE expression . expression
+    (37) comparation -> GT expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1286,15 +1325,16 @@ state 64
 
 state 65
 
-    (38) comparation -> LT expression . expression
+    (38) comparation -> GTE expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1305,15 +1345,16 @@ state 65
 
 state 66
 
-    (39) comparation -> LTE expression . expression
+    (39) comparation -> LT expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1324,68 +1365,70 @@ state 66
 
 state 67
 
-    (43) especial_1 -> CAR expression .
-
-    RPAREN          reduce using rule 43 (especial_1 -> CAR expression .)
-
-
-state 68
-
-    (44) especial_1 -> CDR expression .
-
-    RPAREN          reduce using rule 44 (especial_1 -> CDR expression .)
-
-
-state 69
-
-    (45) especial_1 -> COND cond_clauses .
-
-    RPAREN          reduce using rule 45 (especial_1 -> COND cond_clauses .)
-
-
-state 70
-
-    (47) cond_clauses -> cond_clause . cond_clauses
-    (46) cond_clauses -> .
-    (47) cond_clauses -> . cond_clause cond_clauses
-    (48) cond_clause -> . LPAREN expression expression RPAREN
-
-    RPAREN          reduce using rule 46 (cond_clauses -> .)
-    LPAREN          shift and go to state 71
-
-    cond_clause                    shift and go to state 70
-    cond_clauses                   shift and go to state 93
-
-state 71
-
-    (48) cond_clause -> LPAREN . expression expression RPAREN
+    (40) comparation -> LTE expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
     T               shift and go to state 11
 
-    expression                     shift and go to state 94
+    expression                     shift and go to state 93
     term                           shift and go to state 8
+
+state 68
+
+    (44) especial_1 -> CAR expression .
+
+    RPAREN          reduce using rule 44 (especial_1 -> CAR expression .)
+
+
+state 69
+
+    (45) especial_1 -> CDR expression .
+
+    RPAREN          reduce using rule 45 (especial_1 -> CDR expression .)
+
+
+state 70
+
+    (46) especial_1 -> COND cond_clauses .
+
+    RPAREN          reduce using rule 46 (especial_1 -> COND cond_clauses .)
+
+
+state 71
+
+    (48) cond_clauses -> cond_clause . cond_clauses
+    (47) cond_clauses -> .
+    (48) cond_clauses -> . cond_clause cond_clauses
+    (49) cond_clause -> . LPAREN expression expression RPAREN
+
+    RPAREN          reduce using rule 47 (cond_clauses -> .)
+    LPAREN          shift and go to state 72
+
+    cond_clause                    shift and go to state 71
+    cond_clauses                   shift and go to state 94
 
 state 72
 
-    (49) especial_2 -> CONS expression . expression
+    (49) cond_clause -> LPAREN . expression expression RPAREN
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1396,179 +1439,55 @@ state 72
 
 state 73
 
-    (6) function -> LPAREN DEFUN ID LPAREN . param_list RPAREN expression RPAREN
-    (7) param_list -> . ID param_list
-    (8) param_list -> . ID
-    (9) param_list -> .
-
-    ID              shift and go to state 96
-    RPAREN          reduce using rule 9 (param_list -> .)
-
-    param_list                     shift and go to state 97
-
-state 74
-
-    (41) arglist -> expression arglist .
-
-    RPAREN          reduce using rule 41 (arglist -> expression arglist .)
-
-
-state 75
-
-    (22) if -> IF expression expression . expression
+    (50) especial_2 -> CONS expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
     T               shift and go to state 11
 
-    expression                     shift and go to state 98
+    expression                     shift and go to state 96
     term                           shift and go to state 8
+
+state 74
+
+    (6) function -> LPAREN DEFUN ID LPAREN . param_list RPAREN expression RPAREN
+    (7) param_list -> . ID param_list
+    (8) param_list -> . ID
+    (9) param_list -> .
+
+    ID              shift and go to state 97
+    RPAREN          reduce using rule 9 (param_list -> .)
+
+    param_list                     shift and go to state 98
+
+state 75
+
+    (42) arglist -> expression arglist .
+
+    RPAREN          reduce using rule 42 (arglist -> expression arglist .)
+
 
 state 76
 
-    (23) arith -> PLUS expression expression .
-
-    RPAREN          reduce using rule 23 (arith -> PLUS expression expression .)
-
-
-state 77
-
-    (24) arith -> MINUS expression expression .
-
-    RPAREN          reduce using rule 24 (arith -> MINUS expression expression .)
-
-
-state 78
-
-    (25) arith -> TIMES expression expression .
-
-    RPAREN          reduce using rule 25 (arith -> TIMES expression expression .)
-
-
-state 79
-
-    (26) arith -> DIVIDE expression expression .
-
-    RPAREN          reduce using rule 26 (arith -> DIVIDE expression expression .)
-
-
-state 80
-
-    (27) arith -> FLOOR expression expression .
-
-    RPAREN          reduce using rule 27 (arith -> FLOOR expression expression .)
-
-
-state 81
-
-    (28) arith -> MOD expression expression .
-
-    RPAREN          reduce using rule 28 (arith -> MOD expression expression .)
-
-
-state 82
-
-    (29) arith -> EXPT expression expression .
-
-    RPAREN          reduce using rule 29 (arith -> EXPT expression expression .)
-
-
-state 83
-
-    (30) comparation -> EQ expression expression .
-
-    RPAREN          reduce using rule 30 (comparation -> EQ expression expression .)
-
-
-state 84
-
-    (31) comparation -> EQL expression expression .
-
-    RPAREN          reduce using rule 31 (comparation -> EQL expression expression .)
-
-
-state 85
-
-    (32) comparation -> EQUAL expression expression .
-
-    RPAREN          reduce using rule 32 (comparation -> EQUAL expression expression .)
-
-
-state 86
-
-    (33) comparation -> EQUALP expression expression .
-
-    RPAREN          reduce using rule 33 (comparation -> EQUALP expression expression .)
-
-
-state 87
-
-    (34) comparation -> NUM_EQ expression expression .
-
-    RPAREN          reduce using rule 34 (comparation -> NUM_EQ expression expression .)
-
-
-state 88
-
-    (35) comparation -> NUM_NEQ expression expression .
-
-    RPAREN          reduce using rule 35 (comparation -> NUM_NEQ expression expression .)
-
-
-state 89
-
-    (36) comparation -> GT expression expression .
-
-    RPAREN          reduce using rule 36 (comparation -> GT expression expression .)
-
-
-state 90
-
-    (37) comparation -> GTE expression expression .
-
-    RPAREN          reduce using rule 37 (comparation -> GTE expression expression .)
-
-
-state 91
-
-    (38) comparation -> LT expression expression .
-
-    RPAREN          reduce using rule 38 (comparation -> LT expression expression .)
-
-
-state 92
-
-    (39) comparation -> LTE expression expression .
-
-    RPAREN          reduce using rule 39 (comparation -> LTE expression expression .)
-
-
-state 93
-
-    (47) cond_clauses -> cond_clause cond_clauses .
-
-    RPAREN          reduce using rule 47 (cond_clauses -> cond_clause cond_clauses .)
-
-
-state 94
-
-    (48) cond_clause -> LPAREN expression . expression RPAREN
+    (23) if -> IF expression expression . expression
     (10) expression -> . term
     (11) expression -> . LPAREN operation RPAREN
     (12) term -> . NUM
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
@@ -1577,14 +1496,160 @@ state 94
     expression                     shift and go to state 99
     term                           shift and go to state 8
 
+state 77
+
+    (24) arith -> PLUS expression expression .
+
+    RPAREN          reduce using rule 24 (arith -> PLUS expression expression .)
+
+
+state 78
+
+    (25) arith -> MINUS expression expression .
+
+    RPAREN          reduce using rule 25 (arith -> MINUS expression expression .)
+
+
+state 79
+
+    (26) arith -> TIMES expression expression .
+
+    RPAREN          reduce using rule 26 (arith -> TIMES expression expression .)
+
+
+state 80
+
+    (27) arith -> DIVIDE expression expression .
+
+    RPAREN          reduce using rule 27 (arith -> DIVIDE expression expression .)
+
+
+state 81
+
+    (28) arith -> FLOOR expression expression .
+
+    RPAREN          reduce using rule 28 (arith -> FLOOR expression expression .)
+
+
+state 82
+
+    (29) arith -> MOD expression expression .
+
+    RPAREN          reduce using rule 29 (arith -> MOD expression expression .)
+
+
+state 83
+
+    (30) arith -> EXPT expression expression .
+
+    RPAREN          reduce using rule 30 (arith -> EXPT expression expression .)
+
+
+state 84
+
+    (31) comparation -> EQ expression expression .
+
+    RPAREN          reduce using rule 31 (comparation -> EQ expression expression .)
+
+
+state 85
+
+    (32) comparation -> EQL expression expression .
+
+    RPAREN          reduce using rule 32 (comparation -> EQL expression expression .)
+
+
+state 86
+
+    (33) comparation -> EQUAL expression expression .
+
+    RPAREN          reduce using rule 33 (comparation -> EQUAL expression expression .)
+
+
+state 87
+
+    (34) comparation -> EQUALP expression expression .
+
+    RPAREN          reduce using rule 34 (comparation -> EQUALP expression expression .)
+
+
+state 88
+
+    (35) comparation -> NUM_EQ expression expression .
+
+    RPAREN          reduce using rule 35 (comparation -> NUM_EQ expression expression .)
+
+
+state 89
+
+    (36) comparation -> NUM_NEQ expression expression .
+
+    RPAREN          reduce using rule 36 (comparation -> NUM_NEQ expression expression .)
+
+
+state 90
+
+    (37) comparation -> GT expression expression .
+
+    RPAREN          reduce using rule 37 (comparation -> GT expression expression .)
+
+
+state 91
+
+    (38) comparation -> GTE expression expression .
+
+    RPAREN          reduce using rule 38 (comparation -> GTE expression expression .)
+
+
+state 92
+
+    (39) comparation -> LT expression expression .
+
+    RPAREN          reduce using rule 39 (comparation -> LT expression expression .)
+
+
+state 93
+
+    (40) comparation -> LTE expression expression .
+
+    RPAREN          reduce using rule 40 (comparation -> LTE expression expression .)
+
+
+state 94
+
+    (48) cond_clauses -> cond_clause cond_clauses .
+
+    RPAREN          reduce using rule 48 (cond_clauses -> cond_clause cond_clauses .)
+
+
 state 95
 
-    (49) especial_2 -> CONS expression expression .
+    (49) cond_clause -> LPAREN expression . expression RPAREN
+    (10) expression -> . term
+    (11) expression -> . LPAREN operation RPAREN
+    (12) term -> . NUM
+    (13) term -> . ID
+    (14) term -> . NIL
+    (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    RPAREN          reduce using rule 49 (especial_2 -> CONS expression expression .)
+    LPAREN          shift and go to state 48
+    NUM             shift and go to state 9
+    ID              shift and go to state 7
+    NIL             shift and go to state 10
+    T               shift and go to state 11
 
+    expression                     shift and go to state 100
+    term                           shift and go to state 8
 
 state 96
+
+    (50) especial_2 -> CONS expression expression .
+
+    RPAREN          reduce using rule 50 (especial_2 -> CONS expression expression .)
+
+
+state 97
 
     (7) param_list -> ID . param_list
     (8) param_list -> ID .
@@ -1594,41 +1659,41 @@ state 96
 
   ! reduce/reduce conflict for RPAREN resolved using rule 8 (param_list -> ID .)
     RPAREN          reduce using rule 8 (param_list -> ID .)
-    ID              shift and go to state 96
+    ID              shift and go to state 97
 
   ! RPAREN          [ reduce using rule 9 (param_list -> .) ]
 
-    param_list                     shift and go to state 100
-
-state 97
-
-    (6) function -> LPAREN DEFUN ID LPAREN param_list . RPAREN expression RPAREN
-
-    RPAREN          shift and go to state 101
-
+    param_list                     shift and go to state 101
 
 state 98
 
-    (22) if -> IF expression expression expression .
-
-    RPAREN          reduce using rule 22 (if -> IF expression expression expression .)
-
-
-state 99
-
-    (48) cond_clause -> LPAREN expression expression . RPAREN
+    (6) function -> LPAREN DEFUN ID LPAREN param_list . RPAREN expression RPAREN
 
     RPAREN          shift and go to state 102
 
 
+state 99
+
+    (23) if -> IF expression expression expression .
+
+    RPAREN          reduce using rule 23 (if -> IF expression expression expression .)
+
+
 state 100
+
+    (49) cond_clause -> LPAREN expression expression . RPAREN
+
+    RPAREN          shift and go to state 103
+
+
+state 101
 
     (7) param_list -> ID param_list .
 
     RPAREN          reduce using rule 7 (param_list -> ID param_list .)
 
 
-state 101
+state 102
 
     (6) function -> LPAREN DEFUN ID LPAREN param_list RPAREN . expression RPAREN
     (10) expression -> . term
@@ -1637,32 +1702,33 @@ state 101
     (13) term -> . ID
     (14) term -> . NIL
     (15) term -> . T
+    (16) term -> . LPAREN RPAREN
 
-    LPAREN          shift and go to state 47
+    LPAREN          shift and go to state 48
     NUM             shift and go to state 9
     ID              shift and go to state 7
     NIL             shift and go to state 10
     T               shift and go to state 11
 
-    expression                     shift and go to state 103
+    expression                     shift and go to state 104
     term                           shift and go to state 8
-
-state 102
-
-    (48) cond_clause -> LPAREN expression expression RPAREN .
-
-    LPAREN          reduce using rule 48 (cond_clause -> LPAREN expression expression RPAREN .)
-    RPAREN          reduce using rule 48 (cond_clause -> LPAREN expression expression RPAREN .)
-
 
 state 103
 
-    (6) function -> LPAREN DEFUN ID LPAREN param_list RPAREN expression . RPAREN
+    (49) cond_clause -> LPAREN expression expression RPAREN .
 
-    RPAREN          shift and go to state 104
+    LPAREN          reduce using rule 49 (cond_clause -> LPAREN expression expression RPAREN .)
+    RPAREN          reduce using rule 49 (cond_clause -> LPAREN expression expression RPAREN .)
 
 
 state 104
+
+    (6) function -> LPAREN DEFUN ID LPAREN param_list RPAREN expression . RPAREN
+
+    RPAREN          shift and go to state 105
+
+
+state 105
 
     (6) function -> LPAREN DEFUN ID LPAREN param_list RPAREN expression RPAREN .
 
@@ -1676,5 +1742,5 @@ state 104
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: reduce/reduce conflict in state 96 resolved using rule (param_list -> ID)
-WARNING: rejected rule (param_list -> <empty>) in state 96
+WARNING: reduce/reduce conflict in state 97 resolved using rule (param_list -> ID)
+WARNING: rejected rule (param_list -> <empty>) in state 97
