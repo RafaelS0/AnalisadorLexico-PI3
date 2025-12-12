@@ -1,4 +1,3 @@
-
 "O interpretador executa instruções em formato de tuplas (op, arg1, arg2, result)"
 
 class Interpreter:
@@ -58,6 +57,21 @@ class Interpreter:
                 elif op == 'mod': result = left % right
                 elif op == 'expt': result = left ** right
                 self.memory[instr[3]] = result
+            elif op == 'CONS':
+                a = self.get_value(instr[1])
+                b = self.get_value(instr[2])
+                if isinstance(b, list):
+                    self.memory[instr[3]] = [a] + b
+                elif b == []:
+                    self.memory[instr[3]] = [a]
+                else:
+                    self.memory[instr[3]] = [a, b]
+            elif op == 'CAR':
+                val = self.get_value(instr[1])
+                self.memory[instr[3]] = val[0] if val else []
+            elif op == 'CDR':
+                val = self.get_value(instr[1])
+                self.memory[instr[3]] = val[1:] if len(val) > 1 else []
             
             pc += 1
                 

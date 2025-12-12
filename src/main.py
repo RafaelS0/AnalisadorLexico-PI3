@@ -168,7 +168,7 @@ print(f"Resultado: {result}")
 # ==============================
 
 print("\n" + "="*50)
-resposta = input("Deseja iniciar o interpretador interativo? (s/n): ").strip().lower()
+resposta = input("Deseja iniciar o interpretador? (s/n): ").strip().lower()
 
 if resposta in ['s', 'sim', 'y', 'yes']:
     print("\nIniciando REPL...")
