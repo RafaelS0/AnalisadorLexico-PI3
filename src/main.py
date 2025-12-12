@@ -16,10 +16,18 @@ with open("lisp_code.txt") as f:
 # Alimenta o lexer
 lexer.input(code)
 
-# Imprime a análise léxica
+# Imprime e salva a análise léxica
 print("\n")
+tokens_list = []
 for tok in lexer:
     print(tok)
+    tokens_list.append(str(tok))
+
+# Salva tokens em arquivo
+with open("tokens.txt", "w") as f:
+    f.write("=== ANÁLISE LÉXICA (TOKENS) ===\n")
+    for token in tokens_list:
+        f.write(token + "\n")
 
 # ==============================
 #     Gerar e imprimir a AST
@@ -36,6 +44,27 @@ ast = parser.parse(code, lexer=lexer)
 # Imprime AST em formato de árvore
 print("\n=== AST ===")
 print_organized_ast(ast)
+
+# Salva AST em arquivo
+with open("ast_tree.txt", "w") as f:
+    import sys
+    from io import StringIO
+    
+    # Captura a saída do print_organized_ast
+    old_stdout = sys.stdout
+    sys.stdout = captured_output = StringIO()
+    
+    print_organized_ast(ast)
+    
+    # Restaura stdout e pega o conteúdo
+    sys.stdout = old_stdout
+    ast_content = captured_output.getvalue()
+    
+    # Escreve no arquivo
+    f.write("=== (AST) ===\n")
+    f.write(ast_content)
+    
+print("\nAST salva em 'ast_tree.txt'")
 
 
 # ==============================
@@ -114,7 +143,9 @@ interpreter.execute(intermediate_expt)
 
 
 
-print("\n Código intermediário salvo em 'codigo_intermediario.txt'")
+print("Código intermediário salvo em 'codigo_intermediario.txt'")
+print("AST salva em 'ast_tree.txt'")
+print("Tokens salvos em 'tokens.txt'")
 interpreter.execute(intermediate)
 
 # Teste 1: soma de lista [1, 2, 3]
