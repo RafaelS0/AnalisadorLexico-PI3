@@ -63,7 +63,6 @@ with open("codigo_intermediario.txt", "w") as f:
         f.write("\n")
     f.write("]")
 
-
 interpreter = Interpreter() # Instanciando o interpretador
 
 
@@ -132,6 +131,54 @@ print(f"Resultado: {result}")
 print("\nTeste: (retirar 2 '(1 2 3 2 4))")
 result = interpreter.call_function(intermediate, 'retirar', [6, [1, 2, 3, 2, 4]])
 print(f"Resultado: {result}")
+
+# ==============================
+#     Interpretador Interativo
+# ==============================
+
+print("\n" + "="*50)
+resposta = input("Deseja iniciar o interpretador interativo? (s/n): ").strip().lower()
+
+if resposta in ['s', 'sim', 'y', 'yes']:
+    print("\nIniciando REPL...")
+    print("Digite 'quit' para sair")
+    print("Funções disponíveis:", list(interpreter.functions.keys()))
+    print()
+    
+    # Loop do REPL
+    while True:
+        try:
+            user_input = input("lisp> ").strip()
+            
+            if user_input.lower() in ['quit', 'exit', 'q']:
+                print("Saindo...")
+                break
+            
+            if not user_input:
+                continue
+            
+            # Processa entrada Lisp
+            lexer.input(user_input)
+            ast_repl = parser.parse(user_input, lexer=lexer)
+            
+            if ast_repl is None:
+                print("Erro: Sintaxe inválida")
+                continue
+            
+            # Gera e executa código intermediário
+            generator_repl = CodeGenerator()
+            intermediate_repl = generator_repl.generate(ast_repl)
+            interpreter.execute(intermediate_repl)
+            
+        except KeyboardInterrupt:
+            print("\nUse 'quit' para sair")
+        except EOFError:
+            print("\nSaindo...")
+            break
+        except Exception as e:
+            print(f"Erro: {e}")
+else:
+    print("Programa finalizado.")
 
 
 
