@@ -173,7 +173,6 @@ resposta = input("Deseja iniciar o interpretador? (s/n): ").strip().lower()
 if resposta in ['s', 'sim', 'y', 'yes']:
     print("\nIniciando REPL...")
     print("Digite 'quit' para sair")
-    print("Funções disponíveis:", list(interpreter.functions.keys()))
     print()
     
     # Loop do REPL
