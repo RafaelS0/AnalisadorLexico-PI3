@@ -5,9 +5,8 @@ from ast_formatter import print_organized_ast
 from interpreter import Interpreter
 
 
-# ==============================
-#     Gerar e imprimir a análise léxica
-# ==============================
+#########  Gerar e imprimir a análise léxica  #########
+
 
 # Abre o arquivo com o código e o lê
 with open("lisp_code.txt") as f:
@@ -29,9 +28,9 @@ with open("tokens.txt", "w") as f:
     for token in tokens_list:
         f.write(token + "\n")
 
-# ==============================
-#     Gerar e imprimir a AST
-# ==============================
+
+################   Gerar e imprimir a AST  ##################
+
 
 # Abre o arquivo com o código e o lê
 with open("lisp_code.txt", "r") as file:
@@ -67,9 +66,9 @@ with open("ast_tree.txt", "w") as f:
 print("\nAST salva em 'ast_tree.txt'")
 
 
-# ==============================
-#     Gerar e imprimir o código intermediário
-# ==============================
+
+#################  Gerar e imprimir o código intermediário ##################
+
 
 # Cria uma intância do gerador de código intermediário
 generator = CodeGenerator()
@@ -95,9 +94,9 @@ with open("codigo_intermediario.txt", "w") as f:
 interpreter = Interpreter() # Instanciando o interpretador
 
 
-# ==============================
-#     Executar código intermediário 
-# ==============================
+
+###################  TESTES DO  Interpretador ###########################
+
 
 # TESTE: Executar código CLisp diretamente pela main.py
 print("\n=== Teste de Operações Aritméticas ===")
@@ -141,8 +140,6 @@ interpreter.execute(intermediate_expt)
 
 
 
-
-
 print("Código intermediário salvo em 'codigo_intermediario.txt'")
 print("AST salva em 'ast_tree.txt'")
 print("Tokens salvos em 'tokens.txt'")
@@ -163,19 +160,19 @@ print("\nTeste: (retirar 2 '(1 2 3 2 4))")
 result = interpreter.call_function(intermediate, 'retirar', [6, [1, 2, 3, 2, 4]])
 print(f"Resultado: {result}")
 
-# ==============================
-#     Interpretador Interativo
-# ==============================
+
+###################     Interpretador Interativo  ###########################
+
 
 print("\n" + "="*50)
 resposta = input("Deseja iniciar o interpretador? (s/n): ").strip().lower()
 
 if resposta in ['s', 'sim', 'y', 'yes']:
-    print("\nIniciando REPL...")
-    print("Digite 'quit' para sair")
+    print("\nIniciando ...")
+    print("Digite 'q' para encerrar")
     print()
     
-    # Loop do REPL
+    # Loop do interpretador
     while True:
         try:
             user_input = input("lisp> ").strip()
@@ -201,7 +198,7 @@ if resposta in ['s', 'sim', 'y', 'yes']:
             interpreter.execute(intermediate_repl)
             
         except KeyboardInterrupt:
-            print("\nUse 'quit' para sair")
+            print("\nUse 'q' para sair")
         except EOFError:
             print("\nSaindo...")
             break
