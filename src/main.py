@@ -4,6 +4,7 @@ from tokens import lexer
 from parser import parser
 from codegen import CodeGenerator
 
+#Função para salvar as saídas dos tokens, parser e código intermediário em arquivos txt
 def save_outputs(tokens_list, ast, intermediate_code):
     os.makedirs("saidas_codigo", exist_ok=True)
     
