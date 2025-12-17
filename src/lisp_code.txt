@@ -1,5 +1,5 @@
 (defun soma (lista)
-    (if (eq lista nil) 0
+    (if (eq lista nil) 
         (+ (car lista) (soma (cdr lista)))))
 		
 (defun ordenar (lista)

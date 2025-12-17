@@ -124,17 +124,5 @@ def t_error(t):
 # Construção do lexer
 lexer = lex.lex()
 
-with open("lisp_code.txt", "r") as file:
-    cmp_data = file.read()
 
-lexer.input(cmp_data)
 
-print("Data (instructions):\n", cmp_data)
-print("Token list:\n")
-
-# imprime os tokens
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)

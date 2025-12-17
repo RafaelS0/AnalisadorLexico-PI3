@@ -1,4 +1,3 @@
-import sys
 import pprint # Biblioteca para imprimir a árvore de forma bonita
 from tokens import lexer
 from parser import parser # Certifique-se que o arquivo do parser se chama parser_lisp.py
