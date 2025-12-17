@@ -3,6 +3,7 @@ import os
 from tokens import lexer
 from parser import parser
 from codegen import CodeGenerator
+from interpreter import Interpreter
 
 #Função para salvar as saídas dos tokens, parser e código intermediário em arquivos txt
 def save_outputs(tokens_list, ast, intermediate_code):
@@ -104,7 +105,25 @@ def main():
 
 
 
+    # ---------------------------------------------------------
+    # 5. Interpretação do Código Intermediário
+    # ---------------------------------------------------------
+    print("\n" + "="*50)
+    print(">>> INICIANDO EXECUÇÃO DO CÓDIGO INTERMEDIÁRIO <<<")
+    print("="*50)   
+    try:
+        interpreter = Interpreter()
+        result = interpreter.execute(intermediate_code)
+        if result is not None:
+            print(f"\n✓ Resultado final: {interpreter.format_result(result)}")
+    except Exception as e:
+        print(f"ERRO: {e}")
+
+ 
+
+
 
 
 if __name__ == "__main__":
     main()
+
