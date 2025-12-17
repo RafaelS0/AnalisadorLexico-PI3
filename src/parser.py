@@ -44,9 +44,10 @@ def p_element(p):
 # ===========================================
 
 # Definição de função
-# Isso permite: (defun f (x) (print x) (+ x 1))
 def p_function(p):
-    '''function : LPAREN DEFUN ID LPAREN param_list RPAREN sequence RPAREN'''
+    '''
+    function : LPAREN DEFUN ID LPAREN param_list RPAREN expression RPAREN
+    '''
     p[0] = ('defun', p[3], p[5], p[7])
 
 # Lista de parâmetros
