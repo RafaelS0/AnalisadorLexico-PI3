@@ -1,7 +1,25 @@
-import pprint # Biblioteca para imprimir a árvore de forma bonita
+import pprint
+import os
 from tokens import lexer
-from parser import parser # Certifique-se que o arquivo do parser se chama parser_lisp.py
+from parser import parser
 from codegen import CodeGenerator
+
+def save_outputs(tokens_list, ast, intermediate_code):
+    os.makedirs("saidas_codigo", exist_ok=True)
+    
+    with open("saidas_codigo/tokens.txt", "w") as f:
+        for tok in tokens_list:
+            f.write(f"{tok}\n")
+    
+    with open("saidas_codigo/ast.txt", "w") as f:
+        pp = pprint.PrettyPrinter(indent=4, width=80, stream=f)
+        pp.pprint(ast)
+    
+    with open("saidas_codigo/codigo_intermediario.txt", "w") as f:
+        for instr in intermediate_code:
+            f.write(f"{instr}\n")
+    
+    print("\n✓ Saídas salvas na pasta 'saidas_codigo/'")
 
 
 def main():
@@ -27,14 +45,13 @@ def main():
     print(">>> INICIANDO ANÁLISE LÉXICA (TOKENS) <<<")
     print("-" * 50)
     
-    # Alimentamos o lexer com os dados
     lexer.input(data)
-
-    # Loop para imprimir cada token encontrado
+    tokens_list = []
     while True:
         tok = lexer.token()
         if not tok:
-            break      # Sem mais dados
+            break
+        tokens_list.append(tok)
         print(tok)
 
     print("-" * 50)
@@ -75,6 +92,10 @@ def main():
         print("Código Intermediário gerado:\n")
         for instr in intermediate_code:
             print(instr)
+        
+        # Salvar saídas em arquivos
+        if result and intermediate_code:
+            save_outputs(tokens_list, result, intermediate_code)
     except (TypeError, NotImplementedError) as e:
         print(f"ERRO: {e}")
     except Exception as e:
