@@ -1,9 +1,11 @@
 import pprint # Biblioteca para imprimir a árvore de forma bonita
 from tokens import lexer
 from parser import parser # Certifique-se que o arquivo do parser se chama parser_lisp.py
+from codegen import CodeGenerator
+
 
 def main():
-    filename = "lisp_code.txt"
+    filename = "src/lisp_code.txt"
 
     # 1. Leitura do Arquivo
     try:
@@ -54,8 +56,33 @@ def main():
         # PrettyPrinter ajuda a identar as tuplas e listas para facilitar a leitura
         pp = pprint.PrettyPrinter(indent=4, width=80)
         pp.pprint(result)
+        print(f"\nTipo da AST: {type(result)}")
     else:
         print("O Parser retornou vazio. Verifique se há erros de sintaxe acima.")
+
+
+
+    # ---------------------------------------------------------
+    # 4. Geração do Código Intermediário 
+    # ---------------------------------------------------------
+    print("\n" + "="*50)
+    print(">>> INICIANDO GERAÇÃO DE CÓDIGO INTERMEDIÁRIO <<<")
+    print("="*50)
+
+    try:
+        codegen = CodeGenerator()
+        intermediate_code = codegen.generate(result)
+        print("Código Intermediário gerado:\n")
+        for instr in intermediate_code:
+            print(instr)
+    except (TypeError, NotImplementedError) as e:
+        print(f"ERRO: {e}")
+    except Exception as e:
+        print(f"ERRO inesperado: {e}")
+
+
+
+
 
 if __name__ == "__main__":
     main()
