@@ -50,24 +50,24 @@ class LispCompiler:
                 print("ERRO: Falha na análise sintática")
                 return None
             
-            print(f"✓ AST gerada com {len(ast)} elemento(s)")
+            print(f" AST gerada com {len(ast)} elemento(s)")
             
             # 2. Geração de código intermediário
             print("\n2. Gerando código intermediário...")
             intermediate_code = self.generate_code(ast)
             
-            print(f"✓ Gerado {len(intermediate_code)} instruções")
+            print(f" Gerado {len(intermediate_code)} instruções")
             
             # 3. Execução
             print("\n3. Executando...")
             print("-" * 40)
             result = self.execute(intermediate_code)
             
-            print(f"\n✓ Execução concluída")
+            print(f"\n Execução concluída")
             return result
             
         except Exception as e:
-            print(f"\n✗ Erro durante compilação/execução: {e}")
+            print(f"\n Erro durante compilação/execução: {e}")
             import traceback
             traceback.print_exc()
             return None
@@ -84,9 +84,9 @@ class LispCompiler:
             
             self.current_filename = filename
             
-            print(f"\n📁 Arquivo: {filename}")
-            print(f"📏 Tamanho: {len(lisp_code)} caracteres")
-            print(f"📄 Conteúdo:\n{'-'*40}")
+            print(f"\n Arquivo: {filename}")
+            print(f" Tamanho: {len(lisp_code)} caracteres")
+            print(f" Conteúdo:\n{'-'*40}")
             print(lisp_code)
             print(f"{'-'*40}")
             
@@ -117,30 +117,30 @@ class LispCompiler:
             if hasattr(self, 'current_ast') and self.current_ast is not None:
                 tokens_file = f"{base_name}_tokens.txt"
                 self.save_tokens(tokens_file)
-                print(f"✓ Tokens salvos em: {tokens_file}")
+                print(f" Tokens salvos em: {tokens_file}")
             
             # 2. Salvar AST
             if self.current_ast is not None:
                 ast_file = f"{base_name}_ast.txt"
                 from ast_formatter import save_ast_to_file
                 save_ast_to_file(self.current_ast, ast_file)
-                print(f"✓ AST salva em: {ast_file}")
+                print(f" AST salva em: {ast_file}")
             
             # 3. Salvar código intermediário
             if self.current_code is not None:
                 code_file = f"{base_name}_code.txt"
                 self.save_intermediate_code(code_file)
-                print(f"✓ Código intermediário salvo em: {code_file}")
+                print(f" Código intermediário salvo em: {code_file}")
             
             # 4. Salvar resultado da execução
             if self.interpreter.last_result is not None:
                 result_file = f"{base_name}_result.txt"
                 with open(result_file, 'w', encoding='utf-8') as f:
                     f.write(f"Resultado: {self.interpreter.last_result}\n")
-                print(f"✓ Resultado salvo em: {result_file}")
+                print(f" Resultado salvo em: {result_file}")
                 
         except Exception as e:
-            print(f"⚠️  Aviso ao salvar outputs: {e}")
+            print(f" Aviso ao salvar outputs: {e}")
     
     def save_tokens(self, filename):
         """Salva tokens em arquivo."""
@@ -189,13 +189,13 @@ class LispCompiler:
         """Mostra menu principal com opções."""
         while True:
             print("\n" + "="*60)
-            print("🏆 COMPILADOR/INTERPRETADOR LISP")
+            print(" COMPILADOR/INTERPRETADOR LISP")
             print("="*60)
-            print("1. 📁 Carregar arquivo Lisp")
-            print("2. ✏️  Modo interativo (REPL)")
-            print("3. 🧪 Executar suíte de testes")
-            print("4. 📊 Mostrar informações do sistema")
-            print("5. 🚪 Sair")
+            print("1. Carregar arquivo Lisp")
+            print("2. Modo interativo (REPL)")
+            print("3. Executar suíte de testes")
+            print("4. Mostrar informações do sistema")
+            print("5. Sair")
             print("="*60)
             
             choice = input("\nEscolha uma opção (1-5): ").strip()
@@ -209,20 +209,20 @@ class LispCompiler:
             elif choice == '4':
                 self.show_system_info()
             elif choice == '5':
-                print("\n👋 Saindo do programa...")
+                print("\n Saindo do programa...")
                 break
             else:
-                print("❌ Opção inválida! Tente novamente.")
+                print(" Opção inválida! Tente novamente.")
     
     def file_menu(self):
         """Menu para seleção e processamento de arquivos."""
         while True:
             print("\n" + "="*60)
-            print("📁 MENU DE ARQUIVOS")
+            print(" MENU DE ARQUIVOS")
             print("="*60)
-            print("1. 📂 Listar arquivos .lisp/.txt no diretório atual")
-            print("2. ⌨️  Digitar caminho do arquivo")
-            print("3. ↩️  Voltar ao menu principal")
+            print("1. Listar arquivos .lisp/.txt no diretório atual")
+            print("2. Digitar caminho do arquivo")
+            print("3. Voltar ao menu principal")
             print("="*60)
             
             choice = input("\nEscolha uma opção (1-3): ").strip()
@@ -234,7 +234,7 @@ class LispCompiler:
             elif choice == '3':
                 break
             else:
-                print("❌ Opção inválida!")
+                print(" Opção inválida!")
     
     def list_and_select_file(self):
         """Lista arquivos e permite selecionar um."""
@@ -251,10 +251,10 @@ class LispCompiler:
         all_files = sorted(lisp_files) + sorted(txt_files)
         
         if not all_files:
-            print("\n📭 Nenhum arquivo .lisp ou .txt encontrado no diretório atual.")
+            print("\n Nenhum arquivo .lisp ou .txt encontrado no diretório atual.")
             return
         
-        print("\n📋 Arquivos disponíveis:")
+        print("\n Arquivos disponíveis:")
         print("-" * 40)
         
         for i, filename in enumerate(all_files, 1):
@@ -273,16 +273,16 @@ class LispCompiler:
             elif choice == len(all_files) + 1:
                 return
             else:
-                print("❌ Seleção inválida!")
+                print(" Seleção inválida!")
         except ValueError:
-            print("❌ Por favor, digite um número.")
+            print(" Por favor, digite um número.")
     
     def enter_file_path(self):
         """Permite digitar o caminho do arquivo."""
         filepath = input("\nDigite o caminho do arquivo: ").strip()
         
         if not filepath:
-            print("❌ Caminho vazio!")
+            print(" Caminho vazio!")
             return
         
         # Adicionar extensão .lisp se não tiver
@@ -293,7 +293,7 @@ class LispCompiler:
     
     def process_selected_file(self, filename):
         """Processa o arquivo selecionado."""
-        print(f"\n📄 Processando arquivo: {filename}")
+        print(f"\n Processando arquivo: {filename}")
         print("-" * 40)
         
         try:
@@ -307,18 +307,18 @@ class LispCompiler:
             result = self.compile_and_execute_file(filename)
             
             if result is not None:
-                print(f"\n🎯 Resultado final: {result}")
+                print(f"\n Resultado final: {result}")
             
             input("\nPressione Enter para continuar...")
             
         except Exception as e:
-            print(f"❌ Erro ao processar arquivo: {e}")
+            print(f" Erro ao processar arquivo: {e}")
             input("\nPressione Enter para continuar...")
     
     def repl_menu(self):
         """Menu do modo REPL interativo."""
         print("\n" + "="*60)
-        print("✏️  MODO INTERATIVO LISP (REPL)")
+        print(" MODO INTERATIVO LISP (REPL)")
         print("="*60)
         print("Digite expressões Lisp para avaliar")
         print("Comandos especiais:")
@@ -342,7 +342,7 @@ class LispCompiler:
                     if cmd in ['back', 'b']:
                         break
                     elif cmd in ['quit', 'q', 'exit']:
-                        print("👋 Saindo do programa...")
+                        print(" Saindo do programa...")
                         sys.exit(0)
                     elif cmd == 'ast':
                         self.show_current_ast()
@@ -357,7 +357,7 @@ class LispCompiler:
                     elif cmd == 'help':
                         self.show_repl_help()
                     else:
-                        print(f"❌ Comando desconhecido: '{cmd}'")
+                        print(f" Comando desconhecido: '{cmd}'")
                     
                     continue
                 
@@ -366,7 +366,7 @@ class LispCompiler:
                     continue
                 
                 # Compilar e executar expressão Lisp
-                print(f"\n➡️  Avaliando: {user_input}")
+                print(f"\n Avaliando: {user_input}")
                 
                 # Reiniciar para nova expressão
                 self.codegen = CodeGenerator()
@@ -375,15 +375,15 @@ class LispCompiler:
                 result = self.compile_and_execute(user_input)
                 
                 if result is not None:
-                    print(f"\n✅ Resultado: {self.interpreter.format_result(result)}")
+                    print(f"\n Resultado: {self.interpreter.format_result(result)}")
                 
             except KeyboardInterrupt:
-                print("\n⚠️  Use ':back' para voltar ou ':quit' para sair")
+                print("\n Use ':back' para voltar ou ':quit' para sair")
             except EOFError:
-                print("\n👋 Saindo...")
+                print("\n Saindo...")
                 break
             except Exception as e:
-                print(f"\n❌ Erro: {e}")
+                print(f"\n Erro: {e}")
     
     def show_current_ast(self):
         """Mostra AST atual."""
@@ -396,7 +396,7 @@ class LispCompiler:
     def show_current_code(self):
         """Mostra código intermediário atual."""
         if self.current_code:
-            print("\n💻 Código Intermediário:")
+            print("\n Código Intermediário:")
             print("-" * 40)
             for i, instr in enumerate(self.current_code):
                 print(f"{i:4d}: {instr}")
@@ -405,7 +405,7 @@ class LispCompiler:
     
     def show_memory_state(self):
         """Mostra estado da memória."""
-        print("\n💾 Estado da Memória:")
+        print("\n Estado da Memória:")
         print(f"  Último resultado: {self.interpreter.last_result}")
         print(f"  Variáveis temporárias: {len([k for k in self.interpreter.memory if k.startswith('t')])}")
         print(f"  Funções definidas: {list(self.interpreter.functions.keys())}")
@@ -421,7 +421,7 @@ class LispCompiler:
         self.interpreter = Interpreter()
         self.current_ast = None
         self.current_code = None
-        print("✅ Compilador reiniciado")
+        print(" Compilador reiniciado")
     
     def save_repl_outputs(self):
         """Salva outputs do REPL."""
@@ -430,11 +430,11 @@ class LispCompiler:
             base_name = "repl"
         
         self.save_outputs(base_name)
-        print(f"✅ Outputs salvos com prefixo '{base_name}_'")
+        print(f" Outputs salvos com prefixo '{base_name}_'")
     
     def show_repl_help(self):
         """Mostra ajuda do REPL."""
-        print("\n📚 AJUDA DO REPL")
+        print("\n AJUDA DO REPL")
         print("-" * 40)
         print("Comandos disponíveis:")
         print("  :ast     - Mostrar AST da última expressão")
@@ -448,7 +448,7 @@ class LispCompiler:
     
     def test_suite(self):
         """Executa uma suíte de testes."""
-        print("\n🧪 EXECUTANDO SUÍTE DE TESTES")
+        print("\n EXECUTANDO SUÍTE DE TESTES")
         print("="*60)
         
         tests = [
@@ -480,18 +480,18 @@ class LispCompiler:
                 result = self.compile_and_execute(code)
                 
                 if result == expected:
-                    print(f"✅ PASSOU: esperado {expected}, obtido {result}")
+                    print(f" PASSOU: esperado {expected}, obtido {result}")
                     passed += 1
                 else:
-                    print(f"❌ FALHOU: esperado {expected}, obtido {result}")
+                    print(f" FALHOU: esperado {expected}, obtido {result}")
                     failed += 1
                     
             except Exception as e:
-                print(f"❌ ERRO: {e}")
+                print(f" ERRO: {e}")
                 failed += 1
         
         print("\n" + "="*60)
-        print(f"📊 RESUMO: {passed} passaram, {failed} falharam")
+        print(f" RESUMO: {passed} passaram, {failed} falharam")
         print("="*60)
         
         input("\nPressione Enter para continuar...")
@@ -499,7 +499,7 @@ class LispCompiler:
     
     def show_system_info(self):
         """Mostra informações do sistema."""
-        print("\n🖥️  INFORMAÇÕES DO SISTEMA")
+        print("\n INFORMAÇÕES DO SISTEMA")
         print("="*60)
         print(f"Python: {sys.version}")
         print(f"Plataforma: {sys.platform}")
@@ -517,15 +517,15 @@ class LispCompiler:
 def main():
     """Função principal."""
     print("\n" + "="*60)
-    print("🚀 INICIANDO COMPILADOR/INTERPRETADOR LISP")
+    print(" INICIANDO COMPILADOR/INTERPRETADOR LISP")
     print("="*60)
     
     # Verificar dependências
     try:
         import ply
-        print(f"✅ PLY versão: {ply.__version__}")
+        print(f" PLY versão: {ply.__version__}")
     except ImportError:
-        print("❌ ERRO: PLY não está instalado!")
+        print(" ERRO: PLY não está instalado!")
         print("Instale com: pip install ply")
         return
     
@@ -533,7 +533,7 @@ def main():
     compiler = LispCompiler()
     compiler.show_main_menu()
     
-    print("\n👋 Programa finalizado.")
+    print("\n Programa finalizado.")
 
 if __name__ == "__main__":
     main()
