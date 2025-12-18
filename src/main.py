@@ -5,23 +5,6 @@ from parser import parser
 from codegen import CodeGenerator
 from interpreter import Interpreter
 
-#Função para salvar as saídas dos tokens, parser e código intermediário em arquivos txt
-def save_outputs(tokens_list, ast, intermediate_code):
-    os.makedirs("saidas_codigo", exist_ok=True)
-    
-    with open("saidas_codigo/tokens.txt", "w") as f:
-        for tok in tokens_list:
-            f.write(f"{tok}\n")
-    
-    with open("saidas_codigo/ast.txt", "w") as f:
-        pp = pprint.PrettyPrinter(indent=4, width=80, stream=f)
-        pp.pprint(ast)
-    
-    with open("saidas_codigo/codigo_intermediario.txt", "w") as f:
-        for instr in intermediate_code:
-            f.write(f"{instr}\n")
-    
-    print("\n✓ Saídas salvas na pasta 'saidas_codigo/'")
 
 
 def main():

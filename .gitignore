@@ -3,3 +3,9 @@ __pycache__/
 parser.out
 parsetab.py
 saidas_codigo/*
+lisp_code_ast.txt
+lisp_code_code.txt
+lisp_code_tokens.txt
+*_instr.txt
+*_tokens.txt
+*_ast.txt
