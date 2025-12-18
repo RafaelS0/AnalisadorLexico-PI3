@@ -210,23 +210,23 @@ class LispCompiler:
             print("="*60)
             print("1. Carregar arquivo Lisp")
             print("2. Modo Terminal (Interativo)")
-            print("3. Executar suíte de testes")
-            print("4. Mostrar informações do sistema")
-            print("5. Sair")
+            #print("3. Executar suíte de testes")
+     #       print("4. Mostrar informações do sistema")
+            print("3. Sair")
             print("="*60)
             
             # Lê a opção removendo espaços em branco do início e final
-            choice = input("\nEscolha uma opção (1-5): ").strip()
+            choice = input("\nEscolha uma opção (1-4): ").strip()
             
             if choice == '1':
                 self.file_menu()
             elif choice == '2':
                 self.repl_menu()
+        #    elif choice == '3':
+          #      self.test_suite()
+       #     elif choice == '4':
+        #        self.show_system_info()
             elif choice == '3':
-                self.test_suite()
-            elif choice == '4':
-                self.show_system_info()
-            elif choice == '5':
                 print("\n Saindo do programa...")
                 break
             else:
@@ -349,7 +349,7 @@ class LispCompiler:
         print("Comandos especiais:")
         print("  :ast     - Mostrar AST da última expressão")
         print("  :code    - Mostrar código intermediário")
-        print("  :mem     - Mostrar estado da memória")
+    #    print("  :mem     - Mostrar estado da memória")
         print("  :reset   - Reiniciar interpretador")
         print("  :save    - Salvar outputs em arquivo")
         print("  :back    - Voltar ao menu principal")
