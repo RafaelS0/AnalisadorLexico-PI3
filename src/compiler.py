@@ -347,9 +347,10 @@ class LispCompiler:
         print("="*60)
         print("Digite expressões Lisp para avaliar")
         print("Comandos especiais:")
+        print("  :tokens  - Mostrar tokens da última expressão")
         print("  :ast     - Mostrar AST da última expressão")
         print("  :code    - Mostrar código intermediário")
-    #    print("  :mem     - Mostrar estado da memória")
+     #   print("  :mem     - Mostrar estado da memória")
         print("  :reset   - Reiniciar interpretador")
         print("  :save    - Salvar outputs em arquivo")
         print("  :back    - Voltar ao menu principal")
@@ -370,6 +371,8 @@ class LispCompiler:
                     elif cmd in ['quit', 'q', 'exit']:
                         print(" Saindo do programa...")
                         sys.exit(0)
+                    elif cmd == 'tokens':
+                        self.show_current_tokens()
                     elif cmd == 'ast':
                         self.show_current_ast()
                     elif cmd == 'code':
@@ -394,6 +397,9 @@ class LispCompiler:
                 # Compilar e executar expressão Lisp
                 print(f"\n Avaliando: {user_input}")
                 
+                # Salva a última entrada para visualização de tokens
+                self.last_input = user_input
+                
                 # Reiniciar para nova expressão
                 self.codegen = CodeGenerator()
                 self.interpreter = Interpreter()
@@ -413,6 +419,30 @@ class LispCompiler:
             except Exception as e:
                 print(f"\n Erro: {e}")
                 
+    # Opção ':tokens' : Mostra os tokens da última expressão
+    def show_current_tokens(self):
+        if hasattr(self, 'last_input') and self.last_input:
+            print("\n Tokens da última expressão:")
+            print("-" * 40)
+            
+            # Gera tokens da última entrada
+            from tokens import lexer
+            lexer.input(self.last_input)
+            tokens = []
+            while True:
+                tok = lexer.token()
+                if not tok:
+                    break
+                tokens.append(tok)
+            
+            # Exibe tokens formatados
+            for i, tok in enumerate(tokens, 1):
+                print(f"{i:3d}: {tok.type:12} '{tok.value}'")
+            
+            print(f"\nTotal: {len(tokens)} tokens")
+        else:
+            print("Nenhuma expressão disponível para tokenizar")
+    
     # Opção ':ast' : Imprime a AST
     def show_current_ast(self):
         if self.current_ast:
@@ -467,9 +497,10 @@ class LispCompiler:
         print("\n AJUDA DO REPL")
         print("-" * 40)
         print("Comandos disponíveis:")
+        print("  :tokens  - Mostrar tokens da última expressão")
         print("  :ast     - Mostrar AST da última expressão")
-        print("  :code    - Mostrar código intermediário")
-        print("  :mem     - Mostrar estado da memória")
+        print("  :code    - Mostrar código intermediário da última expressão")
+ #       print("  :mem     - Mostrar estado da memória")
         print("  :reset   - Reiniciar interpretador")
         print("  :save    - Salvar outputs em arquivo")
         print("  :back    - Voltar ao menu principal")
