@@ -203,29 +203,6 @@ class LispCompiler:
                 f.write(f"{i:4d}: {instr}\n")
 
 
-    #####desativado##############
-    # Menu para carregar arquivos Lisp
-    def file_menu(self):
-        while True:
-            print("\n" + "="*60)
-            print(" MENU DE ARQUIVOS")
-            print("="*60)
-            print("1. Listar arquivos lisp.txt no diretório atual")
-            print("2. Digitar caminho do arquivo")
-            print("3. Voltar ao menu principal")
-            print("="*60)
-            
-            # Lê a opção removendo espaços em branco do início e final
-            choice = input("\nEscolha uma opção (1-3): ").strip()
-            
-            if choice == '1':
-                self.list_and_select_file()
-            elif choice == '2':
-                self.enter_file_path()
-            elif choice == '3':
-                break
-            else:
-                print(" Opção inválida!")
     
     # Lista arquivos Lisp e TXT no diretório atual
     def list_and_select_file(self):
@@ -323,7 +300,7 @@ class LispCompiler:
         print("  :ast     - Mostrar AST da última expressão")
         print("  :code    - Mostrar código intermediário")
         print("  :mem     - Mostrar estado da memória")
-        print("  :reset   - Reiniciar interpretador")
+        print("  :reset   - Reiniciar ambiente de execução")
         print("  :save    - Salvar outputs em arquivo")
         print("  :quit    - Sair do programa")
         print("="*60)
