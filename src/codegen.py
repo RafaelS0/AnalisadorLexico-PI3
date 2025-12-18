@@ -114,6 +114,21 @@ class CodeGenerator:
             tmp = self.new_temp()
             self.insert("CONS", a, b, tmp)
             return tmp
+        
+        if op == 'list':
+            # (list 1 2 3) -> cria lista [1, 2, 3]
+            args = expr[1]  # Lista de argumentos
+            if not args:  # (list) -> lista vazia
+                return 'nil'
+            
+            # Constrói lista recursivamente: (list a b c) -> (cons a (cons b (cons c nil)))
+            result = 'nil'
+            for arg in reversed(args):  # Processa de trás para frente
+                arg_val = self.gen_expression(arg)
+                tmp = self.new_temp()
+                self.insert("CONS", arg_val, result, tmp)
+                result = tmp
+            return result
 
         if op == 'car':
             val = self.gen_expression(expr[1])

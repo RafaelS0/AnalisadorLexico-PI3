@@ -208,12 +208,16 @@ def p_cond_clause(p):
     '''
     p[0] = (p[2], p[3])
 
-# Especiais 2: cons
+# Especiais 2: cons e list
 def p_especial_2(p):
     '''
     especial_2 : CONS expression expression
+               | LIST arglist
     '''
-    p[0] = ('cons', p[2], p[3])
+    if p[1] == 'cons':
+        p[0] = ('cons', p[2], p[3])
+    elif p[1] == 'list':
+        p[0] = ('list', p[2])
 
 # ===========================================
 #                ERROS

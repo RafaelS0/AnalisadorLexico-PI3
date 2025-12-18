@@ -202,36 +202,8 @@ class LispCompiler:
             for i, instr in enumerate(self.current_code):
                 f.write(f"{i:4d}: {instr}\n")
 
-	# Menu principal
-    def show_main_menu(self):
-        while True:
-            print("\n" + "="*60)
-            print(" COMPILADOR/INTERPRETADOR LISP")
-            print("="*60)
-            print("1. Carregar arquivo Lisp")
-            print("2. Modo Terminal (Interativo)")
-            #print("3. Executar suíte de testes")
-     #       print("4. Mostrar informações do sistema")
-            print("3. Sair")
-            print("="*60)
-            
-            # Lê a opção removendo espaços em branco do início e final
-            choice = input("\nEscolha uma opção (1-4): ").strip()
-            
-            if choice == '1':
-                self.file_menu()
-            elif choice == '2':
-                self.repl_menu()
-        #    elif choice == '3':
-          #      self.test_suite()
-       #     elif choice == '4':
-        #        self.show_system_info()
-            elif choice == '3':
-                print("\n Saindo do programa...")
-                break
-            else:
-                print(" Opção inválida! Tente novamente.")
-    
+
+    #####desativado##############
     # Menu para carregar arquivos Lisp
     def file_menu(self):
         while True:
@@ -343,17 +315,16 @@ class LispCompiler:
     # Modo interativo (REPL)
     def repl_menu(self):
         print("\n" + "="*60)
-        print(" MODO INTERATIVO LISP (REPL)")
+        print(" AMBIENTE DE EXECUÇÃO LISP")
         print("="*60)
-        print("Digite expressões Lisp para avaliar")
+       # print("Digite expressões Lisp para avaliar")
         print("Comandos especiais:")
         print("  :tokens  - Mostrar tokens da última expressão")
         print("  :ast     - Mostrar AST da última expressão")
         print("  :code    - Mostrar código intermediário")
-     #   print("  :mem     - Mostrar estado da memória")
+        print("  :mem     - Mostrar estado da memória")
         print("  :reset   - Reiniciar interpretador")
         print("  :save    - Salvar outputs em arquivo")
-        print("  :back    - Voltar ao menu principal")
         print("  :quit    - Sair do programa")
         print("="*60)
         
@@ -366,9 +337,7 @@ class LispCompiler:
                 if user_input.startswith(':'):
                     cmd = user_input[1:].lower()
                     
-                    if cmd in ['back', 'b']:
-                        break
-                    elif cmd in ['quit', 'q', 'exit']:
+                    if cmd in ['quit', 'q', 'exit']:
                         print(" Saindo do programa...")
                         sys.exit(0)
                     elif cmd == 'tokens':
@@ -412,7 +381,7 @@ class LispCompiler:
                     print(f"\n Resultado: {self.interpreter.format_result(result)}")
                 
             except KeyboardInterrupt:
-                print("\n Use ':back' para voltar ou ':quit' para sair")
+                print("\n Use ':quit' para sair")
             except EOFError:
                 print("\n Saindo...")
                 break
@@ -500,10 +469,10 @@ class LispCompiler:
         print("  :tokens  - Mostrar tokens da última expressão")
         print("  :ast     - Mostrar AST da última expressão")
         print("  :code    - Mostrar código intermediário da última expressão")
- #       print("  :mem     - Mostrar estado da memória")
+        print("  :mem     - Mostrar estado da memória")
         print("  :reset   - Reiniciar interpretador")
         print("  :save    - Salvar outputs em arquivo")
-        print("  :back    - Voltar ao menu principal")
+
         print("  :quit    - Sair do programa")
         print("  :help    - Mostrar esta ajuda")
     
@@ -579,7 +548,7 @@ class LispCompiler:
 
 def main():
     print("\n" + "="*60)
-    print(" INICIANDO COMPILADOR/INTERPRETADOR LISP")
+    print(" INICIANDO INTERPRETADOR LISP")
     print("="*60)
     
     # Verifica dependências
@@ -592,7 +561,7 @@ def main():
         return
     
     compiler = LispCompiler() # Cria o compilador
-    compiler.show_main_menu() # Chama o menu principal
+    compiler.repl_menu() # Inicia diretamente no modo interativo
     
     print("\n Programa finalizado.")
 
