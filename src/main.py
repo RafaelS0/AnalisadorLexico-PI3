@@ -8,7 +8,7 @@ from interpreter import Interpreter
 
 
 def main():
-    filename = "src/lisp_code.txt"
+    filename = "lisp_code.txt"
 
     # 1. Leitura do Arquivo
     try:
@@ -78,13 +78,9 @@ def main():
         for instr in intermediate_code:
             print(instr)
         
-        # Salvar saídas em arquivos
-        if result and intermediate_code:
-            save_outputs(tokens_list, result, intermediate_code)
-    except (TypeError, NotImplementedError) as e:
-        print(f"ERRO: {e}")
     except Exception as e:
-        print(f"ERRO inesperado: {e}")
+        print(f"ERRO na geração do código intermediário: {e}")
+        return
 
 
 
@@ -92,7 +88,7 @@ def main():
     # 5. Interpretação do Código Intermediário
     # ---------------------------------------------------------
     print("\n" + "="*50)
-    print(">>> INICIANDO EXECUÇÃO DO CÓDIGO INTERMEDIÁRIO <<<")
+    print(">>> EXECUÇÃO DO CÓDIGO INTERMEDIÁRIO <<<")
     print("="*50)   
     try:
         interpreter = Interpreter()
