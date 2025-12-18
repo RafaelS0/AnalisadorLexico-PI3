@@ -1,3 +1,6 @@
 (defun soma (lista)
     (if (eq lista nil) 0
         (+ (car lista) (soma (cdr lista)))))
+
+
+(soma (cons 2 (cons 2 nil)))
