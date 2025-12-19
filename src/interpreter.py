@@ -16,13 +16,21 @@ class Interpreter:
     
     def execute(self, code):
         """Executa o código intermediário."""
-        self.code = code
+        # Preserva funções já definidas e código anterior
+        preserved_functions = self.functions.copy()
+        preserved_code = self.code if self.code else []
+        
+        # Mescla código anterior com novo código
+        self.code = preserved_code + code
         self.memory = {}
         self.call_stack = []
         self.return_stack = []
         self.label_positions = {}
-        self.pc = 0
+        self.pc = len(preserved_code)  # Começa após código copiado
         self.last_result = None
+        
+        # Restaura funções copiadas
+        self.functions = preserved_functions
         
         # PRIMEIRA PASSAGEM: Mapear labels
         self.map_labels(code)
@@ -31,8 +39,8 @@ class Interpreter:
         self.register_functions(code)
         
         # SEGUNDA PASSAGEM: Executar
-        while self.pc < len(code):
-            instr = code[self.pc]
+        while self.pc < len(self.code):
+            instr = self.code[self.pc]
             op = instr[0]
             
             # Pular definições de função durante execução principal
@@ -59,7 +67,7 @@ class Interpreter:
     def map_labels(self, code):
         """Mapeia todas as labels para suas posições no código."""
         self.label_positions = {}
-        for i, instr in enumerate(code):
+        for i, instr in enumerate(self.code):
             if instr[0] == 'LABEL':
                 label = instr[3]
                 self.label_positions[label] = i
@@ -67,7 +75,7 @@ class Interpreter:
     def register_functions(self, code):
         """Registra todas as funções definidas no código."""
         current_func = None
-        for i, instr in enumerate(code):
+        for i, instr in enumerate(self.code):
             op = instr[0]
             
             if op == 'FUNC_BEGIN':
@@ -82,6 +90,14 @@ class Interpreter:
             elif op == 'FUNC_END' and current_func and instr[1] == current_func['name']:
                 current_func['end'] = i
                 self.functions[current_func['name']] = current_func
+                # Armazena descritor na memória para persistência
+                self.memory[current_func['name']] = {
+                    '__type__': 'function',
+                    'name': current_func['name'],
+                    'start': current_func['start'],
+                    'end': current_func['end'],
+                    'params': list(current_func['params'])
+                }
                 current_func = None
     
     # ==============================
@@ -301,7 +317,7 @@ class Interpreter:
         if func_name not in self.functions:
             print(f"ERRO: Função '{func_name}' não definida")
             self.memory[result_var] = []
-            return
+            return True
         
         # Desempilha argumentos (em ordem reversa pois foi empilhado)
         args = []
@@ -324,8 +340,10 @@ class Interpreter:
             'result_var': result_var
         })
         
-        # Configura novo ambiente
-        self.memory = {}
+        # Configura novo ambiente (preserva funções)
+        func_descriptors = {k: v for k, v in self.memory.items() 
+                           if isinstance(v, dict) and v.get('__type__') == 'function'}
+        self.memory = func_descriptors
         self.call_stack = []
         
         # Mapeia parâmetros para variáveis locais
@@ -333,10 +351,9 @@ class Interpreter:
         for param, arg in zip(func['params'], args):
             self.memory[param] = arg
         
-        # Pula para início da função
-        self.pc = func['start']
-        
-        # Não incrementa PC - já está no início da função
+        # Pula para início da função (próxima instrução após FUNC_BEGIN)
+        self.pc = func['start'] + 1
+        return False  # Não incrementa PC
     
     def execute_return(self, instr):
         """Executa RETURN (retorno de função)."""

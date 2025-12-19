@@ -289,12 +289,11 @@ class LispCompiler:
             print(f" Erro ao processar arquivo: {e}")
             input("\nPressione Enter para continuar...")
     
-    # Modo interativo (REPL)
+    # Modo interativo 
     def repl_menu(self):
         print("\n" + "="*60)
         print(" AMBIENTE DE EXECUÇÃO LISP")
         print("="*60)
-       # print("Digite expressões Lisp para avaliar")
         print("Comandos especiais:")
         print("  :tokens  - Mostrar tokens da última expressão")
         print("  :ast     - Mostrar AST da última expressão")
@@ -346,9 +345,8 @@ class LispCompiler:
                 # Salva a última entrada para visualização de tokens
                 self.last_input = user_input
                 
-                # Reiniciar para nova expressão
+                # Reiniciar apenas o codegen para nova expressão
                 self.codegen = CodeGenerator()
-                self.interpreter = Interpreter()
                 
                 # Compila e executa
                 result = self.compile_and_execute(user_input)
@@ -356,6 +354,8 @@ class LispCompiler:
                 # Imprime o resultado se não for vazio
                 if result is not None:
                     print(f"\n Resultado: {self.interpreter.format_result(result)}")
+                else:
+                    print(f"\n Resultado: {self.interpreter.format_result(self.interpreter.last_result)}")
                 
             except KeyboardInterrupt:
                 print("\n Use ':quit' para sair")
@@ -387,7 +387,7 @@ class LispCompiler:
             
             print(f"\nTotal: {len(tokens)} tokens")
         else:
-            print("Nenhuma expressão disponível para tokenizar")
+            print("Nenhuma expressão disponível para mostrar tokens")
     
     # Opção ':ast' : Imprime a AST
     def show_current_ast(self):
@@ -440,7 +440,6 @@ class LispCompiler:
     
     # Opção ':help' : Mostra os comandos disponíveis
     def show_repl_help(self):
-        print("\n AJUDA DO REPL")
         print("-" * 40)
         print("Comandos disponíveis:")
         print("  :tokens  - Mostrar tokens da última expressão")
@@ -449,88 +448,19 @@ class LispCompiler:
         print("  :mem     - Mostrar estado da memória")
         print("  :reset   - Reiniciar interpretador")
         print("  :save    - Salvar outputs em arquivo")
-
         print("  :quit    - Sair do programa")
         print("  :help    - Mostrar esta ajuda")
     
-    # suíte de testes
-    def test_suite(self):
-        print("\n EXECUTANDO SUÍTE DE TESTES")
-        print("="*60)
-        
-        tests = [
-            ("Soma simples", "(+ 5 3)", 8),
-            ("Subtração", "(- 10 4)", 6),
-            ("Multiplicação", "(* 3 4)", 12),
-            ("Divisão inteira", "(/ 20 5)", 4),
-            ("Maior que", "(> 5 3)", True),
-            ("Menor que", "(< 2 5)", True),
-            ("IF verdadeiro", "(if (> 5 3) 10 20)", 10),
-            ("IF falso", "(if (< 5 3) 10 20)", 20),
-            ("CONS básico", "(cons 1 nil)", [1]),
-            ("CAR de lista", "(car (cons 1 (cons 2 nil)))", 1),
-            ("Definição e chamada de função", "(defun quadrado (x) (* x x)) (quadrado 4)", 16),
-        ]
-        
-        passed = 0 # Contador de programas executados com suceso
-        failed = 0 # Contador de programas executados com erro
-        
-        for desc, code, expected in tests:
-            print(f"\nTeste: {desc}") # Imprime o nome do teste
-            print(f"Código: {code}")  # Imprime o código
-            
-            try:
-                # Reiniciar para cada teste
-                self.codegen = CodeGenerator()
-                self.interpreter = Interpreter()
-                
-                # Compila e executa
-                result = self.compile_and_execute(code)
-                
-                if result == expected:
-                    print(f" Execução com sucesso!")
-                    passed += 1 # Incrementa o número de programas executados com sucesso
-                else:
-                    print(f" Execução com erro!")
-                    failed += 1 # Incrementa o número de programas executados com erro
-                    
-            except Exception as e:
-                print(f" ERRO: {e}")
-                failed += 1
-        
-        # Imprime o resumo da suíte de testes
-        print("\n" + "="*60)
-        print(f" RESUMO: {passed} passaram, {failed} falharam")
-        print("="*60)
-        
-        input("\nPressione Enter para continuar...")
-        return passed, failed
-    
-    # Mostra informações do sistema
-    def show_system_info(self):
-        print("\n INFORMAÇÕES DO SISTEMA")
-        print("="*60)
-        print(f"Python: {sys.version}")
-        print(f"Plataforma: {sys.platform}")
-        print(f"Diretório atual: {os.getcwd()}")
-        print(f"Arquivo atual: {self.current_filename or 'Nenhum'}")
-        
-        # Informações do compilador
-        print(f"\nCompilador Lisp:")
-        print(f"  Variáveis temporárias usadas: {self.codegen.temp_count}")
-        print(f"  Labels gerados: {self.codegen.label_count}")
-        print(f"  Funções registradas: {len(self.interpreter.functions)}")
-        
-        input("\nPressione Enter para continuar...")
+
 
 def main():
-    print("\n" + "="*60)
-    print(" INICIANDO INTERPRETADOR LISP")
-    print("="*60)
+
+    
     
     # Verifica dependências
     try:
         import ply
+        print("\n")
         print(f" PLY versão: {ply.__version__}")
     except ImportError:
         print(" ERRO: PLY não está instalado!")
