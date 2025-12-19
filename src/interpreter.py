@@ -6,14 +6,14 @@ from codegen import CodeGenerator
 # interpreter.py
 class Interpreter:
     def __init__(self):
-        self.memory = {}           # Memória para variáveis temporárias e parâmetros
-        self.functions = {}        # Dicionário de funções definidas
-        self.call_stack = []       # Pilha de argumentos para chamadas de função
-        self.label_positions = {}  # Cache de posições de labels
-        self.return_stack = []     # Pilha de retorno (PC, memória)
-        self.pc = 0                # Contador de programa
-        self.code = None           # Código atual sendo executado
-        self.last_result = None    # Último resultado calculado
+        self.memory = {}           # Memória para variáveis temporárias e parâmetros: Dicionário {string: int/array/boolean/etc.}
+        self.functions = {}        # Dicionário de funções definidas: Dicionário {string: int}
+        self.call_stack = []       # Pilha de argumentos para chamadas de função: Array [int/array/boolean/etc.]
+        self.label_positions = {}  # Cache de posições de labels: Dicionário {string: int}
+        self.return_stack = []     # Pilha de retorno (PC, memória): Aray [dicionário]
+        self.pc = 0                # Contador de programa: Int
+        self.code = None           # Código atual sendo executado: List ou None
+        self.last_result = None    # Último resultado calculado: int/array/boolean/etc.
 
     # ==============================
     #     Método Principal
