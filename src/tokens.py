@@ -15,6 +15,7 @@ reserved = {
     'defun'         : 'DEFUN',
     'cond'          : 'COND',
     'if'            : 'IF',
+    'load'          : 'LOAD',
 
     # funções aritméticas
     'floor'         : 'FLOOR',
@@ -53,12 +54,8 @@ tokens = [
              'LTE',       # <=
 
              # delimitadores
-             'LPAREN',
-             'RPAREN',
-             'LBRACKET',  # [
-             'RBRACKET',  # ]
-             'LBRACE',    # {
-             'RBRACE',    # }
+             'LPAREN',    # (
+             'RPAREN',    # )
              'T'          # true
          ] + list(reserved.values()) # adiciona as palavras-chave do dicionário
 
@@ -75,10 +72,7 @@ t_LT        = r'<'
 t_LTE       = r'<='
 t_LPAREN    = r'\('
 t_RPAREN    = r'\)'
-t_LBRACKET  = r'\['
-t_RBRACKET  = r'\]'
-t_LBRACE    = r'\{'
-t_RBRACE    = r'\}'
+
 
 
 # regras de tokens mais complexos

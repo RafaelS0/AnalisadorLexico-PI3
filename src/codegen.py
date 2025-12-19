@@ -218,6 +218,13 @@ class CodeGenerator:
             return result_temp
 
 
+        # -------- LOAD --------
+        if op == 'load':
+            filename = expr[1]  # Nome do arquivo
+            tmp = self.new_temp()
+            self.insert("LOAD", filename, None, tmp)
+            return tmp
+
         # -------- Chamada de função --------
         # Verifica se é uma tupla com 2 elementos onde o segundo é uma lista
         if len(expr) == 2 and isinstance(op, str) and isinstance(expr[1], list):

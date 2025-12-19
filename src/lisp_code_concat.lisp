@@ -3,6 +3,3 @@
      (cons (car lista1)
          (concat (cdr lista1) lista2))))
 
-(concat
-  (cons 1 (cons 2 nil))
-  (cons 3 (cons 4 nil)))

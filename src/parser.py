@@ -116,6 +116,7 @@ def p_operation(p):
               | call
               | especial_1
               | especial_2
+              | load_op
     '''
     p[0] = p[1]
 
@@ -219,9 +220,17 @@ def p_especial_2(p):
     elif p[1] == 'list':
         p[0] = ('list', p[2])
 
-# ===========================================
-#                ERROS
-# ===========================================
+
+
+# Load operation
+def p_load_op(p):
+    '''
+    load_op : LOAD STRING
+    '''
+    p[0] = ('load', p[2])
+
+
+# ERROS
 
 def p_error(p):
     if p:

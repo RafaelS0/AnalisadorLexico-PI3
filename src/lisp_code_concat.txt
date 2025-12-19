@@ -1,8 +1,0 @@
-(defun concat (lista1 lista2)
-  (if (eq lista1 nil) lista2
-     (cons (car lista1)
-         (concat (cdr lista1) lista2))))
-
-(concat
-  (cons 1 (cons 2 nil))
-  (cons 3 (cons 4 nil)))

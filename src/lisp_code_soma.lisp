@@ -3,4 +3,3 @@
         (+ (car lista) (soma (cdr lista)))))
 
 
-(soma (cons 2 (cons 2 nil)))

@@ -1,3 +1,8 @@
+from parser import parser
+from tokens import lexer
+from codegen import CodeGenerator
+            
+
 # interpreter.py
 class Interpreter:
     def __init__(self):
@@ -154,6 +159,10 @@ class Interpreter:
             
         elif op == 'CALL':
             self.execute_call(instr)
+            return True
+            
+        elif op == 'LOAD':
+            self.execute_load(instr)
             return True
             
         elif op == 'RETURN':
@@ -516,3 +525,76 @@ class Interpreter:
         print(f"Pilha de Chamada: {self.call_stack}")
         print(f"Pilha de Retorno: {len(self.return_stack)} frames")
         print(f"Funções: {list(self.functions.keys())}")
+    
+    def execute_load(self, instr):
+        """Executa LOAD (carregamento de arquivo)."""
+        filename = self.get_value(instr[1])
+        result_var = instr[3]
+        
+        try:
+            # Adicionar extensão .lisp se não tiver
+            if not (filename.endswith('.lisp') or filename.endswith('.txt')):
+                filename += '.lisp'
+            
+            # Verificar se arquivo existe
+            import os
+            if not os.path.exists(filename):
+                print(f"ERRO: Arquivo '{filename}' não encontrado")
+                self.memory[result_var] = []
+                return
+            
+            # Ler arquivo
+            with open(filename, 'r', encoding='utf-8') as f:
+                lisp_code = f.read()
+            
+            print(f"Carregando arquivo: {filename}")
+            
+            # Compilar código do arquivo
+           
+            lexer.input(lisp_code)
+            ast = parser.parse(lisp_code, lexer=lexer)
+            
+            if ast is None:
+                print(f"ERRO: Falha ao analisar arquivo '{filename}'")
+                self.memory[result_var] = []
+                return
+            
+            # Gerar código intermediário
+            codegen = CodeGenerator()
+            new_code = codegen.generate(ast)
+            
+            # Mesclar com código atual
+            old_pc = self.pc
+            self.code.extend(new_code)
+            
+            # Mapear labels e registrar funções do novo código
+            self.map_labels(new_code)
+            self.register_functions(new_code)
+            
+            # Executar novo código
+            saved_pc = self.pc
+            self.pc = len(self.code) - len(new_code)  # Início do novo código
+            
+            while self.pc < len(self.code):
+                instr = self.code[self.pc]
+                op = instr[0]
+                
+                if op == 'FUNC_BEGIN':
+                    self.jump_to_function_end(instr[1])
+                    continue
+                
+                should_continue = self.execute_instruction(instr)
+                if should_continue:
+                    self.pc += 1
+                else:
+                    break
+            
+            # Restaurar PC
+            self.pc = saved_pc
+            
+            print(f"Arquivo '{filename}' carregado com sucesso")
+            self.memory[result_var] = True  # Sucesso
+            
+        except Exception as e:
+            print(f"ERRO ao carregar arquivo '{filename}': {e}")
+            self.memory[result_var] = []
